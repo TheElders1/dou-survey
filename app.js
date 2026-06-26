@@ -22,7 +22,14 @@ const questions = [
     type: 'special', 
     q: 'Which Department are you in?', 
     sub: 'This helps us prioritize course materials in the CBT app.', 
-    options: [{t: 'Computer Science'}, {t: 'Cyber Security'}, {t: 'Data Science'}, {t: 'Software Engineering'}, {t: 'Other (please specify below)'}] 
+    options: [
+      {t: 'Computer Science'}, 
+      {t: 'Cyber Security'}, 
+      {t: 'Data Science'}, 
+      {t: 'Information Technology'}, 
+      {t: 'Software Engineering'}, 
+      {t: 'Other (please specify below)'}
+    ] 
   },
   { 
     id: 'next_tool', 
@@ -36,7 +43,7 @@ const questions = [
     type: 'text', 
     q: 'Matric Number (Optional)', 
     sub: 'Helps us verify and give priority to active students.', 
-    placeholder: 'e.g. 22/12345' 
+    placeholder: 'e.g. 250000-001' 
   },
   { 
     id: 'feedback', 
@@ -91,7 +98,6 @@ function renderQuestion() {
     html += `<div class="options-list">`;
     q.options.forEach(o => {
       const selected = answers[q.id] === o.t ? 'selected' : '';
-      // Safe dynamic text passing using escaping via clean string conversions
       const escapedVal = o.t.replace(/'/g, "\\'");
       html += `<button class="option-btn ${selected}" onclick="selectOption('${q.id}', '${escapedVal}')">${o.t}</button>`;
     });
