@@ -5,15 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>DOU Studio • Ecosystem</title>
   <meta name="theme-color" content="#510F64">
-  <link rel="manifest" href="data:application/manifest+json,{
-    &quot;name&quot;:&quot;DOU Studio Ecosystem&quot;,
-    &quot;short_name&quot;:&quot;DOU Vote&quot;,
-    &quot;start_url&quot;:&quot;.&quot;,
-    &quot;display&quot;:&quot;standalone&quot;,
-    &quot;background_color&quot;:&quot;#030712&quot;,
-    &quot;theme_color&quot;:&quot;#510F64&quot;,
-    &quot;icons&quot;:[{&quot;src&quot;:&quot;https://via.placeholder.com/192x192/510F64/FFFFFF?text=DOU&quot;,&quot;sizes&quot;:&quot;192x192&quot;,&quot;type&quot;:&quot;image/png&quot;}]
-  }">
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
     
@@ -48,15 +39,15 @@
     .bg-glow { 
       position: fixed; 
       inset: 0; 
+      z-index: -1;
       background: radial-gradient(circle at 20% 30%, rgba(139, 47, 201, 0.25) 0%, transparent 50%),
                   radial-gradient(circle at 80% 70%, rgba(245, 158, 11, 0.12) 0%, transparent 50%);
-      z-index: -1;
       animation: glowPulse 15s ease infinite;
     }
     
-    @keyframes glowPulse {
-      0%, 100% { opacity: 0.9; }
-      50% { opacity: 1; }
+    @keyframes glowPulse { 
+      0%, 100% { opacity: 0.9; } 
+      50% { opacity: 1; } 
     }
     
     .screen { 
@@ -104,8 +95,8 @@
     
     .option-btn { 
       background: var(--card); 
-      border: 1px solid var(--border); 
-      padding: 1.2rem 1.1rem; 
+      border: 1.5px solid var(--border); 
+      padding: 1.25rem 1.1rem; 
       border-radius: 20px; 
       color: var(--text); 
       display: flex; 
@@ -114,19 +105,29 @@
       font-size: 1.05rem; 
       font-weight: 600; 
       text-align: left; 
-      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
     }
     
     .option-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 20px -4px rgb(139 47 201 / 0.25);
+      border-color: var(--purple-light);
     }
     
+    /* Strong Selected State */
     .option-btn.selected { 
-      border-left: 5px solid var(--purple-light); 
-      background: rgba(139, 47, 201, 0.12); 
-      box-shadow: 0 0 0 3px rgba(139, 47, 201, 0.2);
+      border: 2.5px solid var(--purple-light);
+      background: linear-gradient(135deg, rgba(139, 47, 201, 0.22), rgba(139, 47, 201, 0.09));
+      box-shadow: 0 0 0 5px rgba(139, 47, 201, 0.3),
+                  0 10px 15px -3px rgb(139 47 201 / 0.4);
+      transform: translateY(-2px);
+    }
+    
+    .option-btn.selected:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 0 0 6px rgba(139, 47, 201, 0.4),
+                  0 15px 25px -5px rgb(139 47 201 / 0.45);
     }
     
     .text-input { 
@@ -140,12 +141,12 @@
       font-size: 1.05rem; 
       outline: none; 
       resize: none;
-      transition: border 0.2s;
+      transition: all 0.2s;
     }
     
     .text-input:focus {
       border-color: var(--purple-light);
-      box-shadow: 0 0 0 3px rgba(139, 47, 201, 0.15);
+      box-shadow: 0 0 0 4px rgba(139, 47, 201, 0.2);
     }
     
     .nav-bar { 
@@ -173,19 +174,12 @@
       justify-content: center; 
       gap: 10px; 
       transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); 
-      text-decoration: none;
     }
     
     .btn-next { 
       background: linear-gradient(90deg, var(--purple), var(--purple-light)); 
       color: white; 
       box-shadow: 0 10px 15px -3px rgb(81 15 100 / 0.3);
-    }
-    
-    .btn-next:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-      transform: none;
     }
     
     .btn-back { 
@@ -206,7 +200,7 @@
     .progress-fill { 
       height: 100%; 
       background: linear-gradient(90deg, var(--purple), var(--purple-light)); 
-      transition: width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transition: width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); 
       border-radius: 9999px;
     }
 
@@ -247,22 +241,6 @@
     @keyframes bounce {
       0%, 100% { transform: translateY(0); }
       50% { transform: translateY(-15px); }
-    }
-
-    .toast {
-      position: fixed;
-      bottom: 100px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: #111827;
-      color: white;
-      padding: 12px 24px;
-      border-radius: 9999px;
-      font-size: 0.95rem;
-      box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.3);
-      z-index: 200;
-      opacity: 0;
-      transition: all 0.3s;
     }
   </style>
 </head>
@@ -305,7 +283,7 @@
     </div>
   </section>
 
-  <!-- SUCCESS PAGE -->
+  <!-- SUCCESS -->
   <section id="thanks" class="screen">
     <div style="padding-bottom: 100px; text-align: center; margin-top: auto; margin-bottom: auto;">
       <div class="success-emoji">🚀</div>
@@ -341,84 +319,28 @@
     </div>
   </section>
 
-  <div id="toast" class="toast">Thank you!</div>
-
   <script>
-    // Config
     const DB_URL = 'https://script.google.com/macros/s/AKfycbxJOFx17UvGldGJL8CKUMUQVtw-XJSKZlGXVqpzTykHxe8RA3Li832rJAKc5250iz14eg/exec';
     const TG_TOKEN = '8768061971:AAFOGV0ZcFqVSXgEnbM1SAX6d8Y_0qe1jU0';
     const TG_CHAT = '7129036848';
 
-    // Enhanced Questions
     const questions = [
-      { 
-        id: 'know_cbt', 
-        type: 'single', 
-        q: 'Have you used Sure Success CBT?', 
-        sub: 'AI-powered exam practice tailored for DOU courses.', 
-        options: [
-          {t: 'Yes, I love it! 🔥'},
-          {t: 'Heard about it but haven’t tried'},
-          {t: 'No, what is that?'}
-        ] 
-      },
-      { 
-        id: 'know_mart', 
-        type: 'single', 
-        q: 'Did you know about UniMemart?', 
-        sub: 'DOU’s official marketplace for buying/selling and finding rooms.', 
-        options: [
-          {t: 'Yes, I use it regularly'},
-          {t: 'I’ve heard of it'},
-          {t: 'First time hearing about it'}
-        ] 
-      },
-      { 
-        id: 'dept', 
-        type: 'special', 
-        q: 'Which Department are you in?', 
-        sub: 'This helps us prioritize course materials in the CBT app.', 
-        options: [
-          {t: 'Computer Science'},
-          {t: 'Cyber Security'},
-          {t: 'Data Science'},
-          {t: 'Software Engineering'},
-          {t: 'Other (please specify below)'}
-        ] 
-      },
-      { 
-        id: 'next_tool', 
-        type: 'single', 
-        q: 'What should we build next?', 
-        sub: 'Pick the tool that would help you most.', 
-        options: [
-          {t: 'Digital Attendance System'},
-          {t: 'GPA & Result Tracker'},
-          {t: 'Digital Student ID Card'},
-          {t: 'Smart Hostel Finder'}
-        ] 
-      },
-      { 
-        id: 'matric', 
-        type: 'text', 
-        q: 'Matric Number (Optional)', 
-        sub: 'Helps us verify and give priority to active students.', 
-        placeholder: 'e.g. 22/12345' 
-      },
-      { 
-        id: 'feedback', 
-        type: 'text', 
-        q: 'Any other ideas or feedback?', 
-        sub: 'Tell us how we can make these apps better for you.', 
-        placeholder: 'Feature requests, bugs, UI suggestions...' 
-      }
+      { id: 'know_cbt', type: 'single', q: 'Have you used Sure Success CBT?', sub: 'AI-powered exam practice tailored for DOU courses.', 
+        options: [{t: 'Yes, I love it! 🔥'}, {t: 'Heard about it but haven’t tried'}, {t: 'No, what is that?'}] },
+      { id: 'know_mart', type: 'single', q: 'Did you know about UniMemart?', sub: 'DOU’s official marketplace for buying/selling and finding rooms.', 
+        options: [{t: 'Yes, I use it regularly'}, {t: 'I’ve heard of it'}, {t: 'First time hearing about it'}] },
+      { id: 'dept', type: 'special', q: 'Which Department are you in?', sub: 'This helps us prioritize course materials in the CBT app.', 
+        options: [{t: 'Computer Science'}, {t: 'Cyber Security'}, {t: 'Data Science'}, {t: 'Software Engineering'}, {t: 'Other (please specify below)'}] },
+      { id: 'next_tool', type: 'single', q: 'What should we build next?', sub: 'Pick the tool that would help you most.', 
+        options: [{t: 'Digital Attendance System'}, {t: 'GPA & Result Tracker'}, {t: 'Digital Student ID Card'}, {t: 'Smart Hostel Finder'}] },
+      { id: 'matric', type: 'text', q: 'Matric Number (Optional)', sub: 'Helps us verify and give priority to active students.', placeholder: 'e.g. 22/12345' },
+      { id: 'feedback', type: 'text', q: 'Any other ideas or feedback?', sub: 'Tell us how we can make these apps better for you.', placeholder: 'Feature requests, bugs, UI suggestions...' }
     ];
 
     let step = 0;
     let answers = {};
     let submitted = false;
 
-    // Confetti
     function launchConfetti() {
       const colors = ['#8B2FC9', '#F59E0B', '#22C55E'];
       for (let i = 0; i < 80; i++) {
@@ -432,17 +354,13 @@
           confetti.style.borderRadius = '2px';
           confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
           confetti.style.zIndex = '300';
-          confetti.style.opacity = '0.9';
           document.body.appendChild(confetti);
           
           const duration = Math.random() * 3000 + 2500;
           confetti.animate([
             { transform: 'translateY(0) rotate(0deg)', opacity: 1 },
             { transform: `translateY(\( {window.innerHeight + 100}px) rotate( \){Math.random() * 800 - 400}deg)`, opacity: 0 }
-          ], {
-            duration: duration,
-            easing: 'cubic-bezier(0.25, 0.1, 0.25, 1)'
-          });
+          ], { duration: duration, easing: 'cubic-bezier(0.25, 0.1, 0.25, 1)' });
           
           setTimeout(() => confetti.remove(), duration);
         }, i * 12);
@@ -453,8 +371,7 @@
       try {
         const r = await fetch(DB_URL);
         const d = await r.json();
-        const countEl = document.getElementById('liveCount');
-        if (countEl) countEl.innerText = `${d.total || '300+'} students have voted`;
+        document.getElementById('liveCount').innerText = `${d.total || '300+'} students have voted`;
       } catch(e) {
         document.getElementById('liveCount').innerText = 'Join the DOU movement';
       }
@@ -476,42 +393,24 @@
       document.getElementById('bBtn').style.visibility = step === 0 ? 'hidden' : 'visible';
       
       const isLast = step === questions.length - 1;
-      document.getElementById('nBtn').innerText = isLast ? 'Submit Feedback' : 'Continue';
+      document.getElementById('nBtn').innerText = isLast ? 'Submit Feedback' : 'Next';
       document.getElementById('nBtn').disabled = false;
 
-      let html = `
-        <h1 class="q-title">${q.q}</h1>
-        <p class="q-sub">${q.sub}</p>
-      `;
+      let html = `<h1 class="q-title">\( {q.q}</h1><p class="q-sub"> \){q.sub}</p>`;
       
       if (q.type === 'single' || q.type === 'special') {
         html += `<div class="options-list">`;
         q.options.forEach(o => {
           const selected = answers[q.id] === o.t ? 'selected' : '';
-          html += `
-            <button class="option-btn ${selected}" 
-                    onclick="selectOption('\( {q.id}', ' \){o.t.replace(/'/g, "\\'")}')">
-              ${o.t}
-            </button>
-          `;
+          html += `<button class="option-btn \( {selected}" onclick="selectOption(' \){q.id}', '\( {o.t.replace(/'/g, "\\'")}')"> \){o.t}</button>`;
         });
         
         if (q.type === 'special' && answers[q.id] === 'Other (please specify below)') {
-          html += `
-            <input type="text" id="otherInput" class="text-input" 
-                   placeholder="Type your department..." 
-                   oninput="handleOtherInput(this.value)" 
-                   style="margin-top: 12px;">
-          `;
+          html += `<input type="text" id="otherInput" class="text-input" placeholder="Type your department..." oninput="answers['other_dept']=this.value" style="margin-top:12px;">`;
         }
         html += `</div>`;
       } else {
-        html += `
-          <textarea id="textArea" class="text-input" 
-                    style="min-height: 160px;" 
-                    placeholder="${q.placeholder}" 
-                    oninput="answers['\( {q.id}'] = this.value"> \){answers[q.id] || ''}</textarea>
-        `;
+        html += `<textarea id="textArea" class="text-input" style="min-height:160px" placeholder="\( {q.placeholder}" oninput="answers[' \){q.id}'] = this.value">${answers[q.id] || ''}</textarea>`;
       }
       
       area.innerHTML = html;
@@ -521,24 +420,15 @@
       answers[id] = val;
       renderQuestion();
       
-      // Auto-advance for single choice (except "Other")
       if (val !== 'Other (please specify below)' && step < questions.length - 1) {
         setTimeout(() => nextStep(), 380);
       }
     }
 
-    function handleOtherInput(value) {
-      answers['other_dept'] = value.trim();
-    }
-
     function nextStep() {
-      const q = questions[step];
-      
-      // Handle other department
       if (step === 2 && answers['other_dept']) {
         answers['dept'] = answers['other_dept'];
       }
-      
       if (step < questions.length - 1) {
         step++;
         renderQuestion();
@@ -560,75 +450,30 @@
       
       document.getElementById('survey').classList.remove('active');
       document.getElementById('thanks').classList.add('active');
-      
       launchConfetti();
 
-      // Google Sheets
-      try {
-        fetch(DB_URL, { 
-          method: 'POST', 
-          mode: 'no-cors', 
-          body: JSON.stringify(answers) 
-        });
-      } catch(e) {}
+      fetch(DB_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(answers) });
 
-      // Telegram notification
-      try {
-        const msg = `🚀 <b>NEW DOU ECOSYSTEM VOTE</b>\n\n` +
-                    `📱 CBT: ${answers.know_cbt || 'N/A'}\n` +
-                    `🛒 Mart: ${answers.know_mart || 'N/A'}\n` +
-                    `🏫 Dept: ${answers.dept || 'N/A'}\n` +
-                    `🔨 Next: ${answers.next_tool || 'N/A'}\n` +
-                    `🆔 Matric: ${answers.matric || '—'}\n` +
-                    `💭 Feedback: ${answers.feedback ? answers.feedback.substring(0, 120) + '...' : 'None'}`;
-        
-        await fetch(`https://api.telegram.org/bot${TG_TOKEN}/sendMessage`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ 
-            chat_id: TG_CHAT, 
-            text: msg, 
-            parse_mode: 'HTML' 
-          })
-        });
-      } catch(e) {
-        console.log("Telegram notify failed");
-      }
-    }
-
-    function showToast(message) {
-      const toast = document.getElementById('toast');
-      toast.textContent = message;
-      toast.style.opacity = '1';
-      setTimeout(() => toast.style.opacity = '0', 2500);
+      const msg = `🚀 <b>NEW DOU VOTE</b>\n\nCBT: ${answers.know_cbt || 'N/A'}\nMart: ${answers.know_mart || 'N/A'}\nDept: ${answers.dept || 'N/A'}\nNext: ${answers.next_tool || 'N/A'}\nMatric: ${answers.matric || '—'}\nFeedback: ${answers.feedback ? answers.feedback.substring(0,100) : 'None'}`;
+      
+      fetch(`https://api.telegram.org/bot${TG_TOKEN}/sendMessage`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ chat_id: TG_CHAT, text: msg, parse_mode: 'HTML' })
+      });
     }
 
     function shareResults() {
       if (navigator.share) {
-        navigator.share({
-          title: 'DOU Studio Ecosystem',
-          text: 'I just voted on the future of student tools at DOU! Join me:',
-          url: window.location.href
-        });
+        navigator.share({ title: 'DOU Studio', text: 'I just voted on the future of DOU student tools!', url: window.location.href });
       } else {
-        showToast('Link copied! Share with friends.');
         navigator.clipboard.writeText(window.location.href);
+        alert('Link copied! Share with friends.');
       }
     }
 
-    // Keyboard support
-    document.addEventListener('keydown', e => {
-      if (document.getElementById('survey').classList.contains('active')) {
-        if (e.key === 'Enter') nextStep();
-        if (e.key === 'ArrowLeft' && step > 0) prevStep();
-      }
-    });
-
     window.onload = () => {
       getCount();
-      
-      // Make it feel more premium
-      console.log('%cDOU Studio Ecosystem v2.0 - Advanced', 'color:#8B2FC9; font-size:13px; font-weight:700');
     };
   </script>
 </body>
