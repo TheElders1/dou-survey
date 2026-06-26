@@ -315,7 +315,7 @@ body {
 .stat-row:nth-child(3) .stat-bar-fill { background: linear-gradient(90deg, #3B82F6, #8B2FC9); }
 .stat-row:nth-child(4) .stat-bar-fill { background: linear-gradient(90deg, #EC4899, #3B82F6); }
 
-/* Confetti & Actions */
+/* Confetti & Ad Cards */
 .success-emoji { font-size: 4.5rem; animation: bounce 1.5s ease infinite; }
 @keyframes bounce {
   0%, 100% { transform: translateY(0); }
