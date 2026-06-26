@@ -3,10 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>DOU Student Survey</title>
-  <!-- App-like Meta Tags -->
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>DOU Studio - Survey & Apps</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
     :root { 
@@ -17,46 +14,57 @@
       --text: #F9FAFB; 
       --muted: #9CA3AF; 
       --border: rgba(255, 255, 255, 0.1); 
+      --gold: #F59E0B;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-    body { 
-      font-family: 'Plus Jakarta Sans', sans-serif; 
-      background: var(--bg); 
-      color: var(--text); 
-      height: 100dvh; 
-      overflow: hidden; 
-      background-image: radial-gradient(circle at 0% 0%, rgba(81, 15, 100, 0.15) 0%, transparent 50%);
-    }
-    .screen { position: fixed; inset: 0; display: none; flex-direction: column; padding: 1.5rem; transition: 0.3s; }
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: var(--text); height: 100dvh; overflow: hidden; }
+    
+    /* Global Glow */
+    .bg-glow { position: fixed; inset: 0; background: radial-gradient(circle at 0% 0%, rgba(81, 15, 100, 0.2) 0%, transparent 40%), radial-gradient(circle at 100% 100%, rgba(245, 158, 11, 0.05) 0%, transparent 40%); z-index: -1; }
+
+    .screen { position: fixed; inset: 0; display: none; flex-direction: column; padding: 1.5rem; transition: 0.3s; overflow-y: auto; }
     .screen.active { display: flex; }
-    .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; padding-top: env(safe-area-inset-top); }
+
+    /* UI Components */
+    .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
     .q-title { font-size: 1.8rem; font-weight: 800; margin-bottom: 0.5rem; line-height: 1.1; letter-spacing: -0.02em; }
-    .q-sub { color: var(--muted); font-size: 0.95rem; margin-bottom: 2rem; }
-    .options-list { display: flex; flex-direction: column; gap: 0.8rem; overflow-y: auto; padding-bottom: 120px; }
-    .option-btn { background: var(--card); border: 1px solid var(--border); padding: 1.2rem; border-radius: 18px; color: var(--text); display: flex; align-items: center; gap: 1rem; font-size: 1rem; font-weight: 600; text-align: left; transition: 0.2s; }
-    .option-btn:active { transform: scale(0.96); background: rgba(139, 47, 201, 0.1); }
-    .option-btn.selected { border-color: var(--purple-light); background: rgba(139, 47, 201, 0.15); box-shadow: 0 0 15px rgba(139, 47, 201, 0.2); }
-    .text-input { width: 100%; background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 1.2rem; color: var(--text); font-family: inherit; font-size: 1rem; min-height: 120px; outline: none; }
-    .nav-bar { position: fixed; bottom: 0; left: 0; right: 0; padding: 1.5rem calc(1.5rem + env(safe-area-inset-right)) calc(1.5rem + env(safe-area-inset-bottom)); background: linear-gradient(transparent, var(--bg) 40%); display: flex; gap: 0.8rem; }
-    .btn { flex: 1; height: 60px; border-radius: 18px; border: none; font-size: 1.1rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.2s; }
-    .btn-next { background: var(--purple); color: white; box-shadow: 0 4px 15px rgba(81, 15, 100, 0.4); }
-    .btn-next:disabled { opacity: 0.4; }
+    .q-sub { color: var(--muted); font-size: 0.95rem; margin-bottom: 1.5rem; }
+    
+    .options-list { display: flex; flex-direction: column; gap: 0.8rem; padding-bottom: 120px; }
+    .option-btn { background: var(--card); border: 1px solid var(--border); padding: 1.1rem; border-radius: 18px; color: var(--text); display: flex; align-items: center; gap: 1rem; font-size: 1rem; font-weight: 600; text-align: left; transition: 0.2s; }
+    .option-btn.selected { border-color: var(--purple-light); background: rgba(139, 47, 201, 0.1); }
+    
+    .text-input { width: 100%; background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 1.1rem; color: var(--text); font-family: inherit; font-size: 1rem; outline: none; margin-top: 10px; }
+    
+    /* Navigation */
+    .nav-bar { position: fixed; bottom: 0; left: 0; right: 0; padding: 1.5rem; background: linear-gradient(transparent, var(--bg) 40%); display: flex; gap: 0.8rem; z-index: 100; }
+    .btn { flex: 1; height: 60px; border-radius: 18px; border: none; font-size: 1rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; transition: 0.2s; text-decoration: none; }
+    .btn-next { background: var(--purple); color: white; }
     .btn-back { background: var(--card); color: var(--muted); flex: 0.4; border: 1px solid var(--border); }
-    .progress { height: 6px; background: var(--border); border-radius: 10px; margin-bottom: 2rem; overflow: hidden; }
-    .progress-fill { height: 100%; background: linear-gradient(90deg, var(--purple), var(--purple-light)); border-radius: 10px; transition: 0.4s; }
-    .hero { flex: 1; display: flex; flex-direction: column; justify-content: center; text-align: center; }
-    .count-badge { background: rgba(139, 47, 201, 0.1); color: var(--purple-light); padding: 6px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; display: inline-block; margin-bottom: 1rem; border: 1px solid rgba(139, 47, 201, 0.2); }
+    
+    /* Launchpad Buttons (Advertising) */
+    .ad-card { background: var(--card); border: 1px solid var(--border); padding: 1.2rem; border-radius: 20px; margin-bottom: 1rem; text-align: left; }
+    .ad-card h3 { font-size: 1.1rem; margin-bottom: 4px; color: var(--gold); }
+    .ad-card p { font-size: 0.85rem; color: var(--muted); margin-bottom: 12px; }
+    .btn-launch { background: var(--purple); color: white; padding: 10px 15px; border-radius: 12px; font-size: 0.85rem; font-weight: 700; text-decoration: none; display: inline-block; }
+    .btn-whatsapp { background: #25D366; color: white; }
+
+    .progress { height: 6px; background: var(--border); border-radius: 10px; margin-bottom: 1.5rem; overflow: hidden; }
+    .progress-fill { height: 100%; background: var(--purple-light); transition: 0.4s; }
+    .badge { background: rgba(139, 47, 201, 0.1); color: var(--purple-light); padding: 5px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; margin-bottom: 1rem; display: inline-block; }
   </style>
 </head>
 <body>
+  <div class="bg-glow"></div>
 
   <!-- LANDING -->
   <section id="landing" class="screen active">
-    <div class="hero">
-      <div id="badgeArea"><span class="count-badge">Checking votes...</span></div>
-      <h1 class="q-title" style="font-size: 2.5rem;">Pick the next <span style="color:var(--purple-light)">DOU</span> App</h1>
-      <p class="q-sub">Built by students, for students. Your vote decides what we develop next for Dennis Osadabey University.</p>
-      <button class="btn btn-next" onclick="start()">Start Survey →</button>
+    <div style="margin-top: auto; margin-bottom: auto; text-align: center;">
+      <span class="badge">DOU STUDENT PROJECT</span>
+      <h1 class="q-title" style="font-size: 2.4rem;">Shape the future of <span style="color:var(--purple-light)">DOU Apps</span></h1>
+      <p class="q-sub">Help us build the next big tool for students. Already built: <b>Sure Success CBT</b> & <b>UniMemart</b>.</p>
+      <button class="btn btn-next" onclick="start()">Take 1-Min Survey →</button>
+      <div style="margin-top: 2rem; font-size: 0.8rem; color: var(--muted);" id="liveCount">Connecting...</div>
     </div>
   </section>
 
@@ -64,7 +72,7 @@
   <section id="survey" class="screen">
     <div class="header">
       <span style="font-weight:800; color:var(--purple-light)">DOU Studio</span>
-      <span id="stepTxt" style="font-size:0.8rem; font-weight:700; color:var(--muted)">1/5</span>
+      <span id="stepTxt" style="font-size:0.8rem; font-weight:700;">1/5</span>
     </div>
     <div class="progress"><div id="pFill" class="progress-fill" style="width: 20%;"></div></div>
     <div id="qArea"></div>
@@ -74,47 +82,62 @@
     </div>
   </section>
 
-  <!-- SUCCESS -->
+  <!-- ADVERTISING / THANK YOU -->
   <section id="thanks" class="screen">
-    <div class="hero">
-      <div style="font-size: 4rem; margin-bottom: 1rem;">🚀</div>
-      <h1 class="q-title">Vote Recorded!</h1>
-      <p class="q-sub">Thanks for participating. We're analyzing the data to start building the most requested app.</p>
-      <button class="btn btn-next" onclick="location.reload()">Finish</button>
+    <div style="padding-top: 1rem; padding-bottom: 100px;">
+      <div style="text-align: center; margin-bottom: 2rem;">
+        <div style="font-size: 3rem;">🚀</div>
+        <h1 class="q-title">Response Saved!</h1>
+        <p class="q-sub">Check out our active tools for DOU students below:</p>
+      </div>
+
+      <!-- CBT App -->
+      <div class="ad-card">
+        <h3>📚 Sure Success CBT</h3>
+        <p>Prepare for exams with AI-powered past questions and practice tests.</p>
+        <a href="https://sure-success-cbt.vercel.app/" class="btn-launch" target="_blank">Launch CBT App</a>
+      </div>
+
+      <!-- UniMemart -->
+      <div class="ad-card">
+        <h3>🛒 UniMemart Marketplace</h3>
+        <p>The student-first marketplace for DOU. Buy, sell, and split bills easily.</p>
+        <a href="https://www.unimemart.com/" class="btn-launch" target="_blank">Launch Marketplace</a>
+      </div>
+
+      <!-- Contact Admin -->
+      <a href="https://wa.me/2348123456789" class="btn btn-whatsapp" style="margin-top: 1rem;">
+        <span>💬</span> Contact Admin
+      </a>
+      
+      <button class="btn btn-back" onclick="location.reload()" style="margin-top: 1rem; width: 100%;">Back to Survey Home</button>
     </div>
   </section>
 
   <script>
-    // --- YOUR LIVE DATABASE LINK ---
-    const DB_URL = 'https://script.google.com/macros/s/AKfycbxJOFx17UvGldGJL8CKUMUQVtw-XJSKZlGXVqpzTykHxe8RA3Li832rJAKc5250iz14eg/exec'; 
+    const DB_URL = 'https://script.google.com/macros/s/AKfycbxJOFx17UvGldGJL8CKUMUQVtw-XJSKZlGXVqpzTykHxe8RA3Li832rJAKc5250iz14eg/exec';
 
     const questions = [
-      { id: 'choice', type: 'single', q: 'Which app do you need most?', sub: 'Pick your top priority.', options: [{e:'📚', t:'CBT Exam Practice'}, {e:'🍽️', t:'Canteen Pre-order'}, {e:'📅', t:'Timetable Tracker'}, {e:'🏠', t:'Hostel Finder'}] },
-      { id: 'dept', type: 'single', q: 'Your Department?', sub: 'Helps us tailor the features.', options: [{e:'💻', t:'Comp Sci'}, {e:'🔐', t:'Cyber Security'}, {e:'📊', t:'Data Science'}, {e:'⚙️', t:'Software Eng.'}, {e:'🏫', t:'Other'}] },
-      { id: 'pay', type: 'single', q: 'Would you pay for it?', sub: 'Honesty helps our pricing.', options: [{e:'💰', t:'Yes, if affordable'}, {e:'💭', t:'Maybe'}, {e:'🆓', t:'No, free only'}] },
-      { id: 'pain', type: 'single', q: 'Biggest pain point?', sub: 'What stresses you most?', options: [{e:'😰', t:'Lack of past questions'}, {e:'😵', t:'Missing classes'}, {e:'💸', t:'Money management'}, {e:'🍛', t:'Food queues'}] },
-      { id: 'idea', type: 'text', q: 'Any other app idea?', sub: 'Optional: What else is missing?', placeholder: 'I wish there was an app for...' }
+      { id: 'choice', type: 'single', q: 'Which new app do you need?', sub: 'Beyond CBT & UniMemart.', options: [{e:'🍽️', t:'Canteen Pre-order'}, {e:'📅', t:'Timetable Tracker'}, {e:'🏠', t:'Hostel Finder'}, {e:'💰', t:'Finance Manager'}] },
+      { id: 'dept', type: 'special', q: 'Your Department?', sub: 'Missing? Select "Other" to let us add your courses to CBT App.', 
+        options: [{t:'Computer Science'}, {t:'Cyber Security'}, {t:'Data Science'}, {t:'Software Eng.'}, {t:'Other (Type below)'}] 
+      },
+      { id: 'pay', type: 'single', q: 'Would you pay for premium?', sub: 'Help us stay alive.', options: [{e:'💰', t:'Yes'}, {e:'💭', t:'Maybe'}, {e:'🆓', t:'No'}] },
+      { id: 'pain', type: 'single', q: 'Biggest pain point?', sub: 'At DOU currently.', options: [{e:'😰', t:'Exam Practice'}, {e:'😵', t:'Schedule'}, {e:'🍛', t:'Canteen Queues'}] },
+      { id: 'idea', type: 'text', q: 'Any suggestions?', sub: 'For CBT or UniMemart.', placeholder: 'I want a feature that...' }
     ];
 
-    let step = 0; 
-    let answers = {};
+    let step = 0; let answers = {};
 
-    // Get live vote count from Google Sheets
     async function getCount() {
       try {
         const r = await fetch(DB_URL);
         const d = await r.json();
-        document.getElementById('badgeArea').innerHTML = `<span class="count-badge">${d.total} Students Voted Already</span>`;
-      } catch(e) { 
-        document.getElementById('badgeArea').innerHTML = `<span class="count-badge">Join the community vote</span>`; 
-      }
+        document.getElementById('liveCount').innerText = `${d.total} Students have voted`;
+      } catch(e) { document.getElementById('liveCount').innerText = `Join the DOU community vote`; }
     }
 
-    function start() { 
-      document.getElementById('landing').classList.remove('active'); 
-      document.getElementById('survey').classList.add('active'); 
-      render(); 
-    }
+    function start() { document.getElementById('landing').classList.remove('active'); document.getElementById('survey').classList.add('active'); render(); }
 
     function render() {
       const q = questions[step];
@@ -122,53 +145,46 @@
       document.getElementById('pFill').style.width = ((step+1)/questions.length)*100 + '%';
       document.getElementById('stepTxt').innerText = (step+1) + ' / ' + questions.length;
       document.getElementById('bBtn').style.visibility = step === 0 ? 'hidden' : 'visible';
-      document.getElementById('nBtn').innerText = step === questions.length - 1 ? 'Finish 🎉' : 'Next';
 
       let html = `<h1 class="q-title">${q.q}</h1><p class="q-sub">${q.sub}</p>`;
-      if(q.type === 'single') {
+      
+      if(q.type === 'single' || q.type === 'special') {
         html += `<div class="options-list">`;
         q.options.forEach(o => {
           const sel = answers[q.id] === o.t ? 'selected' : '';
-          html += `<button class="option-btn ${sel}" onclick="pick('${q.id}','${o.t}')"><span>${o.e}</span><span>${o.t}</span></button>`;
+          html += `<button class="option-btn ${sel}" onclick="pick('${q.id}','${o.t}')"><span>${o.e || '🏢'}</span><span>${o.t}</span></button>`;
         });
+        if(q.type === 'special' && answers[q.id] === 'Other (Type below)') {
+          html += `<input type="text" id="deptInput" class="text-input" placeholder="Type your department here..." oninput="answers['other_dept']=this.value">`;
+        }
         html += `</div>`;
       } else {
-        html += `<textarea id="textIn" class="text-input" placeholder="${q.placeholder}" oninput="answers['${q.id}']=this.value">${answers[q.id]||''}</textarea>`;
+        html += `<textarea id="textIn" class="text-input" style="min-height:120px" placeholder="${q.placeholder}" oninput="answers['${q.id}']=this.value">${answers[q.id]||''}</textarea>`;
       }
       area.innerHTML = html;
-      document.getElementById('nBtn').disabled = q.type === 'single' && !answers[q.id];
+      document.getElementById('nBtn').disabled = (q.type !== 'text' && !answers[q.id]);
     }
 
     function pick(id, val) { 
-      answers[id] = val; 
-      render(); 
-      // Auto-advance
-      setTimeout(() => { if(step < questions.length - 1) next(); }, 400); 
+        answers[id] = val; 
+        render(); 
+        if(val !== 'Other (Type below)') {
+            setTimeout(() => { if(step < questions.length - 1) next(); }, 400); 
+        }
     }
-
     function next() { 
-      if(step < questions.length - 1) { 
-        step++; render(); 
-      } else { 
-        submit(); 
-      } 
+        // If they chose other department, merge the values
+        if(step === 1 && answers['other_dept']) {
+            answers['dept'] = "MISSING: " + answers['other_dept'];
+        }
+        if(step < questions.length - 1) { step++; render(); } else { submit(); } 
     }
-
-    function prev() { 
-      if(step > 0) { step--; render(); } 
-    }
+    function prev() { if(step > 0) { step--; render(); } }
 
     async function submit() {
       document.getElementById('survey').classList.remove('active');
       document.getElementById('thanks').classList.add('active');
-      
-      // Submit to Google Sheets
-      fetch(DB_URL, { 
-        method: 'POST', 
-        mode: 'no-cors', 
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(answers) 
-      });
+      fetch(DB_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(answers) });
     }
 
     window.onload = getCount;
