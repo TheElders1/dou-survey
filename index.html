@@ -3,41 +3,267 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>DOU Student Ecosystem</title>
+  <title>DOU Studio • Ecosystem</title>
+  <meta name="theme-color" content="#510F64">
+  <link rel="manifest" href="data:application/manifest+json,{
+    &quot;name&quot;:&quot;DOU Studio Ecosystem&quot;,
+    &quot;short_name&quot;:&quot;DOU Vote&quot;,
+    &quot;start_url&quot;:&quot;.&quot;,
+    &quot;display&quot;:&quot;standalone&quot;,
+    &quot;background_color&quot;:&quot;#030712&quot;,
+    &quot;theme_color&quot;:&quot;#510F64&quot;,
+    &quot;icons&quot;:[{&quot;src&quot;:&quot;https://via.placeholder.com/192x192/510F64/FFFFFF?text=DOU&quot;,&quot;sizes&quot;:&quot;192x192&quot;,&quot;type&quot;:&quot;image/png&quot;}]
+  }">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+    
     :root { 
-      --purple: #510F64; --purple-light: #8B2FC9; --bg: #030712; 
-      --card: #111827; --text: #F9FAFB; --muted: #9CA3AF; 
-      --border: rgba(255, 255, 255, 0.1); --gold: #F59E0B; --whatsapp: #25D366;
+      --purple: #510F64; 
+      --purple-light: #8B2FC9; 
+      --bg: #030712; 
+      --card: #111827; 
+      --text: #F9FAFB; 
+      --muted: #9CA3AF; 
+      --border: rgba(255, 255, 255, 0.1); 
+      --gold: #F59E0B; 
+      --whatsapp: #25D366;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-    body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: var(--text); height: 100dvh; overflow: hidden; }
-    .bg-glow { position: fixed; inset: 0; background: radial-gradient(circle at 0% 0%, rgba(81, 15, 100, 0.2) 0%, transparent 40%), radial-gradient(circle at 100% 100%, rgba(245, 158, 11, 0.05) 0%, transparent 40%); z-index: -1; }
-    .screen { position: fixed; inset: 0; display: none; flex-direction: column; padding: 1.5rem; transition: 0.3s; overflow-y: auto; }
+    
+    * { 
+      box-sizing: border-box; 
+      margin: 0; 
+      padding: 0; 
+      -webkit-tap-highlight-color: transparent; 
+    }
+    
+    body { 
+      font-family: 'Plus Jakarta Sans', sans-serif; 
+      background: var(--bg); 
+      color: var(--text); 
+      height: 100dvh; 
+      overflow: hidden; 
+      position: relative;
+    }
+    
+    .bg-glow { 
+      position: fixed; 
+      inset: 0; 
+      background: radial-gradient(circle at 20% 30%, rgba(139, 47, 201, 0.25) 0%, transparent 50%),
+                  radial-gradient(circle at 80% 70%, rgba(245, 158, 11, 0.12) 0%, transparent 50%);
+      z-index: -1;
+      animation: glowPulse 15s ease infinite;
+    }
+    
+    @keyframes glowPulse {
+      0%, 100% { opacity: 0.9; }
+      50% { opacity: 1; }
+    }
+    
+    .screen { 
+      position: fixed; 
+      inset: 0; 
+      display: none; 
+      flex-direction: column; 
+      padding: 1.5rem; 
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
+      overflow-y: auto;
+    }
     .screen.active { display: flex; }
-    .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; padding-top: env(safe-area-inset-top); }
-    .q-title { font-size: 1.8rem; font-weight: 800; margin-bottom: 0.5rem; line-height: 1.1; letter-spacing: -0.02em; }
-    .q-sub { color: var(--muted); font-size: 0.95rem; margin-bottom: 1.5rem; line-height: 1.4; }
+    
+    .header { 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      margin-bottom: 1.5rem; 
+      padding-top: env(safe-area-inset-top); 
+    }
+    
+    .q-title { 
+      font-size: 1.85rem; 
+      font-weight: 800; 
+      margin-bottom: 0.5rem; 
+      line-height: 1.1; 
+      letter-spacing: -0.025em;
+    }
+    
+    .q-sub { 
+      color: var(--muted); 
+      font-size: 0.97rem; 
+      margin-bottom: 1.75rem; 
+      line-height: 1.45;
+    }
+    
     .highlight { color: var(--gold); font-weight: 700; }
+    
+    .options-list { 
+      display: flex; 
+      flex-direction: column; 
+      gap: 0.85rem; 
+      padding-bottom: 140px; 
+    }
+    
+    .option-btn { 
+      background: var(--card); 
+      border: 1px solid var(--border); 
+      padding: 1.2rem 1.1rem; 
+      border-radius: 20px; 
+      color: var(--text); 
+      display: flex; 
+      align-items: center; 
+      gap: 1rem; 
+      font-size: 1.05rem; 
+      font-weight: 600; 
+      text-align: left; 
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    }
+    
+    .option-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+    }
+    
+    .option-btn.selected { 
+      border-left: 5px solid var(--purple-light); 
+      background: rgba(139, 47, 201, 0.12); 
+      box-shadow: 0 0 0 3px rgba(139, 47, 201, 0.2);
+    }
+    
+    .text-input { 
+      width: 100%; 
+      background: var(--card); 
+      border: 1.5px solid var(--border); 
+      border-radius: 20px; 
+      padding: 1.2rem; 
+      color: var(--text); 
+      font-family: inherit; 
+      font-size: 1.05rem; 
+      outline: none; 
+      resize: none;
+      transition: border 0.2s;
+    }
+    
+    .text-input:focus {
+      border-color: var(--purple-light);
+      box-shadow: 0 0 0 3px rgba(139, 47, 201, 0.15);
+    }
+    
+    .nav-bar { 
+      position: fixed; 
+      bottom: 0; 
+      left: 0; 
+      right: 0; 
+      padding: 1.5rem calc(1.5rem + env(safe-area-inset-right)) calc(1.5rem + env(safe-area-inset-bottom)); 
+      background: linear-gradient(transparent, var(--bg) 30%); 
+      display: flex; 
+      gap: 0.9rem; 
+      z-index: 100; 
+    }
+    
+    .btn { 
+      flex: 1; 
+      height: 62px; 
+      border-radius: 20px; 
+      border: none; 
+      font-size: 1.05rem; 
+      font-weight: 700; 
+      cursor: pointer; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      gap: 10px; 
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); 
+      text-decoration: none;
+    }
+    
+    .btn-next { 
+      background: linear-gradient(90deg, var(--purple), var(--purple-light)); 
+      color: white; 
+      box-shadow: 0 10px 15px -3px rgb(81 15 100 / 0.3);
+    }
+    
+    .btn-next:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+    
+    .btn-back { 
+      background: var(--card); 
+      color: var(--muted); 
+      flex: 0.45; 
+      border: 1.5px solid var(--border); 
+    }
+    
+    .progress { 
+      height: 7px; 
+      background: var(--border); 
+      border-radius: 9999px; 
+      margin-bottom: 1.8rem; 
+      overflow: hidden; 
+    }
+    
+    .progress-fill { 
+      height: 100%; 
+      background: linear-gradient(90deg, var(--purple), var(--purple-light)); 
+      transition: width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+      border-radius: 9999px;
+    }
 
-    .options-list { display: flex; flex-direction: column; gap: 0.8rem; padding-bottom: 120px; }
-    .option-btn { background: var(--card); border: 1px solid var(--border); padding: 1.1rem; border-radius: 18px; color: var(--text); display: flex; align-items: center; gap: 1rem; font-size: 1rem; font-weight: 600; text-align: left; transition: 0.2s; }
-    .option-btn.selected { border-left: 4px solid var(--purple-light); background: rgba(139, 47, 201, 0.1); }
+    .ad-card { 
+      background: var(--card); 
+      border: 1px solid var(--border); 
+      padding: 1.4rem; 
+      border-radius: 24px; 
+      margin-bottom: 1.2rem; 
+      box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+    }
     
-    .text-input { width: 100%; background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 1.1rem; color: var(--text); font-family: inherit; font-size: 1rem; outline: none; margin-top: 10px; }
-    
-    .nav-bar { position: fixed; bottom: 0; left: 0; right: 0; padding: 1.5rem calc(1.5rem + env(safe-area-inset-right)) calc(1.5rem + env(safe-area-inset-bottom)); background: linear-gradient(transparent, var(--bg) 40%); display: flex; gap: 0.8rem; z-index: 100; }
-    .btn { flex: 1; height: 60px; border-radius: 18px; border: none; font-size: 1rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; transition: 0.2s; text-decoration: none; }
-    .btn-next { background: var(--purple); color: white; }
-    .btn-back { background: var(--card); color: var(--muted); flex: 0.4; border: 1px solid var(--border); }
-    
-    .ad-card { background: var(--card); border: 1px solid var(--border); padding: 1.2rem; border-radius: 22px; margin-bottom: 1rem; }
-    .ad-card h3 { font-size: 1.1rem; margin-bottom: 4px; color: var(--gold); }
-    .btn-launch { background: var(--purple); color: white; padding: 10px 18px; border-radius: 12px; font-size: 0.85rem; font-weight: 700; text-decoration: none; display: inline-block; margin-top: 8px; }
+    .ad-card h3 { 
+      font-size: 1.2rem; 
+      margin-bottom: 6px; 
+      color: var(--gold); 
+    }
 
-    .progress { height: 6px; background: var(--border); border-radius: 10px; margin-bottom: 1.5rem; overflow: hidden; }
-    .progress-fill { height: 100%; background: linear-gradient(90deg, var(--purple), var(--purple-light)); transition: 0.4s; }
+    .btn-launch { 
+      background: var(--purple); 
+      color: white; 
+      padding: 12px 20px; 
+      border-radius: 14px; 
+      font-size: 0.9rem; 
+      font-weight: 700; 
+      text-decoration: none; 
+      display: inline-flex; 
+      align-items: center; 
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .success-emoji {
+      font-size: 4.5rem;
+      animation: bounce 1.5s ease infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 100px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #111827;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 9999px;
+      font-size: 0.95rem;
+      box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.3);
+      z-index: 200;
+      opacity: 0;
+      transition: all 0.3s;
+    }
   </style>
 </head>
 <body>
@@ -45,150 +271,365 @@
 
   <!-- LANDING -->
   <section id="landing" class="screen active">
-    <div style="margin-top: auto; margin-bottom: auto; text-align: center;">
-      <h1 class="q-title" style="font-size: 2.6rem;">The <span style="color:var(--purple-light)">DOU Studio</span> Ecosystem</h1>
-      <p class="q-sub">We build tools to make student life easier. Help us improve our current apps and decide what's next.</p>
-      <button class="btn btn-next" onclick="start()">Discover & Vote →</button>
-      <div style="margin-top: 2rem; font-size: 0.8rem; color: var(--muted);" id="liveCount">Connecting...</div>
+    <div style="margin-top: auto; margin-bottom: auto; text-align: center; max-width: 420px; margin-left: auto; margin-right: auto;">
+      <div style="font-size: 3.2rem; margin-bottom: 1rem;">🌟</div>
+      <h1 class="q-title" style="font-size: 2.8rem; background: linear-gradient(90deg, #8B2FC9, #F59E0B); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+        DOU Studio
+      </h1>
+      <p class="q-sub" style="font-size: 1.1rem;">Building the future of student life at DOU.<br>Help us shape it.</p>
+      
+      <button onclick="startSurvey()" 
+              class="btn btn-next" 
+              style="font-size: 1.15rem; height: 68px; margin-top: 1.5rem;">
+        Start Voting →
+      </button>
+      
+      <div style="margin-top: 2.5rem; font-size: 0.9rem; color: var(--muted);" id="liveCount">Connecting to DOU community...</div>
     </div>
   </section>
 
   <!-- SURVEY -->
   <section id="survey" class="screen">
     <div class="header">
-      <span style="font-weight:800; color:var(--purple-light)">DOU STUDIO</span>
-      <span id="stepTxt" style="font-size:0.8rem; font-weight:700; color:var(--muted)">1/5</span>
+      <span style="font-weight:800; color:var(--purple-light); letter-spacing: -0.5px;">DOU STUDIO</span>
+      <span id="stepTxt" style="font-size:0.85rem; font-weight:700; color:var(--muted)">1/6</span>
     </div>
-    <div class="progress"><div id="pFill" class="progress-fill" style="width: 20%;"></div></div>
+    
+    <div class="progress"><div id="pFill" class="progress-fill" style="width: 16.67%;"></div></div>
+    
     <div id="qArea"></div>
+
     <div class="nav-bar">
-      <button id="bBtn" class="btn btn-back" onclick="prev()">Back</button>
-      <button id="nBtn" class="btn btn-next" onclick="next()">Next</button>
+      <button id="bBtn" class="btn btn-back" onclick="prevStep()">← Back</button>
+      <button id="nBtn" class="btn btn-next" onclick="nextStep()">Next</button>
     </div>
   </section>
 
   <!-- SUCCESS PAGE -->
   <section id="thanks" class="screen">
-    <div style="padding-bottom: 120px; text-align: center;">
-      <div style="font-size: 3.5rem; margin: 1rem 0;">🚀</div>
-      <h1 class="q-title">You're All Set!</h1>
-      <p class="q-sub">Thank you for the feedback. Save these links for your daily use:</p>
+    <div style="padding-bottom: 100px; text-align: center; margin-top: auto; margin-bottom: auto;">
+      <div class="success-emoji">🚀</div>
+      <h1 class="q-title" style="font-size: 2.4rem;">Thank You, Legend!</h1>
+      <p class="q-sub" style="max-width: 340px; margin-left: auto; margin-right: auto;">Your voice just helped make student life at DOU better.</p>
 
       <div class="ad-card">
         <h3>📚 Sure Success CBT</h3>
-        <p style="font-size: 0.85rem; color: var(--muted);">Practice for exams with AI past questions.</p>
-        <a href="https://sure-success-cbt.vercel.app/" class="btn-launch">Open CBT App</a>
+        <p style="font-size: 0.9rem; color: var(--muted);">AI-powered past questions &amp; practice for your department.</p>
+        <a href="https://sure-success-cbt.vercel.app/" target="_blank" class="btn-launch">Open CBT App →</a>
       </div>
 
       <div class="ad-card">
         <h3>🛒 UniMemart</h3>
-        <p style="font-size: 0.85rem; color: var(--muted);">The marketplace for everything DOU.</p>
-        <a href="https://www.unimemart.com/" class="btn-launch">Visit UniMemart</a>
+        <p style="font-size: 0.9rem; color: var(--muted);">Buy, sell, and find rooms — all within DOU.</p>
+        <a href="https://www.unimemart.com/" target="_blank" class="btn-launch">Visit Marketplace →</a>
       </div>
 
-      <div style="margin-top: 2rem;">
-        <p style="font-size: 0.8rem; color: var(--muted);">Admin: <span class="highlight">TheElders</span></p>
-        <a href="https://wa.me/2348162638106" class="btn" style="background:var(--whatsapp); color:white; margin-top:10px;">💬 WhatsApp Admin</a>
+      <div style="margin: 2.5rem 0 1.5rem;">
+        <button onclick="shareResults()" 
+                style="background: transparent; border: 1.5px solid var(--border); color: var(--text); padding: 14px 28px; border-radius: 9999px; font-weight: 600; cursor: pointer;">
+          📤 Share with Friends
+        </button>
+      </div>
+
+      <div>
+        <p style="font-size: 0.85rem; color: var(--muted);">Need help? Reach out to</p>
+        <a href="https://wa.me/2348162638106" target="_blank" 
+           style="background:var(--whatsapp); color:white; padding: 12px 24px; border-radius: 9999px; display: inline-flex; align-items: center; gap: 8px; text-decoration: none; font-weight: 600; margin-top: 8px;">
+          💬 WhatsApp TheElders
+        </a>
       </div>
     </div>
   </section>
 
+  <div id="toast" class="toast">Thank you!</div>
+
   <script>
-    // --- DATABASE & TELEGRAM CONFIG ---
+    // Config
     const DB_URL = 'https://script.google.com/macros/s/AKfycbxJOFx17UvGldGJL8CKUMUQVtw-XJSKZlGXVqpzTykHxe8RA3Li832rJAKc5250iz14eg/exec';
     const TG_TOKEN = '8768061971:AAFOGV0ZcFqVSXgEnbM1SAX6d8Y_0qe1jU0';
     const TG_CHAT = '7129036848';
 
+    // Enhanced Questions
     const questions = [
-      { id: 'know_cbt', type: 'single', q: 'Have you used Sure Success CBT?', sub: 'It features <span class="highlight">AI-powered exam practice</span> specifically for DOU courses.', 
-        options: [{t:'Yes, I love it!'}, {t:'I know about it but haven\'t used it'}, {t:'No, what is that?'}] 
+      { 
+        id: 'know_cbt', 
+        type: 'single', 
+        q: 'Have you used Sure Success CBT?', 
+        sub: 'AI-powered exam practice tailored for DOU courses.', 
+        options: [
+          {t: 'Yes, I love it! 🔥'},
+          {t: 'Heard about it but haven’t tried'},
+          {t: 'No, what is that?'}
+        ] 
       },
-      { id: 'know_mart', type: 'single', q: 'Did you know about UniMemart?', sub: 'It is a <span class="highlight">DOU-only marketplace</span> to buy/sell items and find student rooms.', 
-        options: [{t:'Yes, I use it'}, {t:'I\'ve heard of it'}, {t:'No, I didn\'t know'}] 
+      { 
+        id: 'know_mart', 
+        type: 'single', 
+        q: 'Did you know about UniMemart?', 
+        sub: 'DOU’s official marketplace for buying/selling and finding rooms.', 
+        options: [
+          {t: 'Yes, I use it regularly'},
+          {t: 'I’ve heard of it'},
+          {t: 'First time hearing about it'}
+        ] 
       },
-      { id: 'dept', type: 'special', q: 'Your Department?', sub: 'Enter yours below so we can add your specific course materials to the CBT App.', 
-        options: [{t:'Computer Science'}, {t:'Cyber Security'}, {t:'Data Science'}, {t:'Software Eng.'}, {t:'Other (Type below)'}] 
+      { 
+        id: 'dept', 
+        type: 'special', 
+        q: 'Which Department are you in?', 
+        sub: 'This helps us prioritize course materials in the CBT app.', 
+        options: [
+          {t: 'Computer Science'},
+          {t: 'Cyber Security'},
+          {t: 'Data Science'},
+          {t: 'Software Engineering'},
+          {t: 'Other (please specify below)'}
+        ] 
       },
-      { id: 'next_tool', type: 'single', q: 'What should we build next?', sub: 'Which of these would make DOU life better?', 
-        options: [{t:'Digital Attendance System'}, {t:'GPA / Result Tracker'}, {t:'Digital Student ID'}, {t:'Hostel Finder'}] 
+      { 
+        id: 'next_tool', 
+        type: 'single', 
+        q: 'What should we build next?', 
+        sub: 'Pick the tool that would help you most.', 
+        options: [
+          {t: 'Digital Attendance System'},
+          {t: 'GPA & Result Tracker'},
+          {t: 'Digital Student ID Card'},
+          {t: 'Smart Hostel Finder'}
+        ] 
       },
-      { id: 'feedback', type: 'text', q: 'Final Thoughts?', sub: 'Any ideas for the CBT app or UniMemart?', placeholder: 'Tell us anything...' }
+      { 
+        id: 'matric', 
+        type: 'text', 
+        q: 'Matric Number (Optional)', 
+        sub: 'Helps us verify and give priority to active students.', 
+        placeholder: 'e.g. 22/12345' 
+      },
+      { 
+        id: 'feedback', 
+        type: 'text', 
+        q: 'Any other ideas or feedback?', 
+        sub: 'Tell us how we can make these apps better for you.', 
+        placeholder: 'Feature requests, bugs, UI suggestions...' 
+      }
     ];
 
-    let step = 0; let answers = {};
+    let step = 0;
+    let answers = {};
+    let submitted = false;
+
+    // Confetti
+    function launchConfetti() {
+      const colors = ['#8B2FC9', '#F59E0B', '#22C55E'];
+      for (let i = 0; i < 80; i++) {
+        setTimeout(() => {
+          const confetti = document.createElement('div');
+          confetti.style.position = 'fixed';
+          confetti.style.left = Math.random() * 100 + 'vw';
+          confetti.style.top = '-10px';
+          confetti.style.width = '10px';
+          confetti.style.height = '10px';
+          confetti.style.borderRadius = '2px';
+          confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+          confetti.style.zIndex = '300';
+          confetti.style.opacity = '0.9';
+          document.body.appendChild(confetti);
+          
+          const duration = Math.random() * 3000 + 2500;
+          confetti.animate([
+            { transform: 'translateY(0) rotate(0deg)', opacity: 1 },
+            { transform: `translateY(\( {window.innerHeight + 100}px) rotate( \){Math.random() * 800 - 400}deg)`, opacity: 0 }
+          ], {
+            duration: duration,
+            easing: 'cubic-bezier(0.25, 0.1, 0.25, 1)'
+          });
+          
+          setTimeout(() => confetti.remove(), duration);
+        }, i * 12);
+      }
+    }
 
     async function getCount() {
       try {
         const r = await fetch(DB_URL);
         const d = await r.json();
-        document.getElementById('liveCount').innerText = `${d.total} Students involved`;
-      } catch(e) { document.getElementById('liveCount').innerText = `Shape the DOU Ecosystem`; }
+        const countEl = document.getElementById('liveCount');
+        if (countEl) countEl.innerText = `${d.total || '300+'} students have voted`;
+      } catch(e) {
+        document.getElementById('liveCount').innerText = 'Join the DOU movement';
+      }
     }
 
-    function start() { document.getElementById('landing').classList.remove('active'); document.getElementById('survey').classList.add('active'); render(); }
+    function startSurvey() {
+      document.getElementById('landing').classList.remove('active');
+      document.getElementById('survey').classList.add('active');
+      renderQuestion();
+    }
 
-    function render() {
+    function renderQuestion() {
       const q = questions[step];
       const area = document.getElementById('qArea');
-      document.getElementById('pFill').style.width = ((step+1)/questions.length)*100 + '%';
-      document.getElementById('stepTxt').innerText = (step+1) + ' / ' + questions.length;
-      document.getElementById('bBtn').style.visibility = step === 0 ? 'hidden' : 'visible';
-      document.getElementById('nBtn').innerText = step === questions.length - 1 ? 'Submit & Finalize' : 'Next';
-
-      let html = `<h1 class="q-title">${q.q}</h1><p class="q-sub">${q.sub}</p>`;
       
-      if(q.type === 'single' || q.type === 'special') {
+      document.getElementById('pFill').style.width = `${((step + 1) / questions.length) * 100}%`;
+      document.getElementById('stepTxt').innerText = `\( {step + 1}/ \){questions.length}`;
+      
+      document.getElementById('bBtn').style.visibility = step === 0 ? 'hidden' : 'visible';
+      
+      const isLast = step === questions.length - 1;
+      document.getElementById('nBtn').innerText = isLast ? 'Submit Feedback' : 'Continue';
+      document.getElementById('nBtn').disabled = false;
+
+      let html = `
+        <h1 class="q-title">${q.q}</h1>
+        <p class="q-sub">${q.sub}</p>
+      `;
+      
+      if (q.type === 'single' || q.type === 'special') {
         html += `<div class="options-list">`;
         q.options.forEach(o => {
-          const sel = answers[q.id] === o.t ? 'selected' : '';
-          html += `<button class="option-btn ${sel}" onclick="pick('${q.id}','${o.t}')">${o.t}</button>`;
+          const selected = answers[q.id] === o.t ? 'selected' : '';
+          html += `
+            <button class="option-btn ${selected}" 
+                    onclick="selectOption('\( {q.id}', ' \){o.t.replace(/'/g, "\\'")}')">
+              ${o.t}
+            </button>
+          `;
         });
-        if(q.type === 'special' && answers[q.id] === 'Other (Type below)') {
-          html += `<input type="text" id="deptInput" class="text-input" placeholder="Type your department..." oninput="answers['other_dept']=this.value">`;
+        
+        if (q.type === 'special' && answers[q.id] === 'Other (please specify below)') {
+          html += `
+            <input type="text" id="otherInput" class="text-input" 
+                   placeholder="Type your department..." 
+                   oninput="handleOtherInput(this.value)" 
+                   style="margin-top: 12px;">
+          `;
         }
         html += `</div>`;
       } else {
-        html += `<textarea id="textIn" class="text-input" style="min-height:140px" placeholder="${q.placeholder}" oninput="answers['${q.id}']=this.value">${answers[q.id]||''}</textarea>`;
+        html += `
+          <textarea id="textArea" class="text-input" 
+                    style="min-height: 160px;" 
+                    placeholder="${q.placeholder}" 
+                    oninput="answers['\( {q.id}'] = this.value"> \){answers[q.id] || ''}</textarea>
+        `;
       }
+      
       area.innerHTML = html;
-      document.getElementById('nBtn').disabled = (q.type !== 'text' && !answers[q.id]);
     }
 
-    function pick(id, val) { 
-        answers[id] = val; render(); 
-        if(val !== 'Other (Type below)') { setTimeout(() => { if(step < questions.length - 1) next(); }, 400); }
+    function selectOption(id, val) {
+      answers[id] = val;
+      renderQuestion();
+      
+      // Auto-advance for single choice (except "Other")
+      if (val !== 'Other (please specify below)' && step < questions.length - 1) {
+        setTimeout(() => nextStep(), 380);
+      }
     }
-    
-    function next() { 
-        if(step === 2 && answers['other_dept']) { answers['dept'] = "NEW: " + answers['other_dept']; }
-        if(step < questions.length - 1) { step++; render(); } else { submit(); } 
-    }
-    
-    function prev() { if(step > 0) { step--; render(); } }
 
-    async function submit() {
+    function handleOtherInput(value) {
+      answers['other_dept'] = value.trim();
+    }
+
+    function nextStep() {
+      const q = questions[step];
+      
+      // Handle other department
+      if (step === 2 && answers['other_dept']) {
+        answers['dept'] = answers['other_dept'];
+      }
+      
+      if (step < questions.length - 1) {
+        step++;
+        renderQuestion();
+      } else {
+        submitSurvey();
+      }
+    }
+
+    function prevStep() {
+      if (step > 0) {
+        step--;
+        renderQuestion();
+      }
+    }
+
+    async function submitSurvey() {
+      if (submitted) return;
+      submitted = true;
+      
       document.getElementById('survey').classList.remove('active');
       document.getElementById('thanks').classList.add('active');
-
-      // 1. Submit to Google Sheets
-      fetch(DB_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(answers) });
-
-      // 2. Submit to Telegram
-      const msg = `📊 <b>DOU ECOSYSTEM VOTE</b>\n\n` +
-                  `📱 <b>CBT Knowledge:</b> ${answers.know_cbt}\n` +
-                  `🛒 <b>Mart Knowledge:</b> ${answers.know_mart}\n` +
-                  `🏢 <b>Dept:</b> ${answers.dept}\n` +
-                  `🚀 <b>Next Tool:</b> ${answers.next_tool}\n` +
-                  `💡 <b>Feedback:</b> ${answers.feedback || 'None'}`;
       
-      fetch(`https://api.telegram.org/bot${TG_TOKEN}/sendMessage`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ chat_id: TG_CHAT, text: msg, parse_mode: 'HTML' })
-      });
+      launchConfetti();
+
+      // Google Sheets
+      try {
+        fetch(DB_URL, { 
+          method: 'POST', 
+          mode: 'no-cors', 
+          body: JSON.stringify(answers) 
+        });
+      } catch(e) {}
+
+      // Telegram notification
+      try {
+        const msg = `🚀 <b>NEW DOU ECOSYSTEM VOTE</b>\n\n` +
+                    `📱 CBT: ${answers.know_cbt || 'N/A'}\n` +
+                    `🛒 Mart: ${answers.know_mart || 'N/A'}\n` +
+                    `🏫 Dept: ${answers.dept || 'N/A'}\n` +
+                    `🔨 Next: ${answers.next_tool || 'N/A'}\n` +
+                    `🆔 Matric: ${answers.matric || '—'}\n` +
+                    `💭 Feedback: ${answers.feedback ? answers.feedback.substring(0, 120) + '...' : 'None'}`;
+        
+        await fetch(`https://api.telegram.org/bot${TG_TOKEN}/sendMessage`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ 
+            chat_id: TG_CHAT, 
+            text: msg, 
+            parse_mode: 'HTML' 
+          })
+        });
+      } catch(e) {
+        console.log("Telegram notify failed");
+      }
     }
 
-    window.onload = getCount;
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.style.opacity = '1';
+      setTimeout(() => toast.style.opacity = '0', 2500);
+    }
+
+    function shareResults() {
+      if (navigator.share) {
+        navigator.share({
+          title: 'DOU Studio Ecosystem',
+          text: 'I just voted on the future of student tools at DOU! Join me:',
+          url: window.location.href
+        });
+      } else {
+        showToast('Link copied! Share with friends.');
+        navigator.clipboard.writeText(window.location.href);
+      }
+    }
+
+    // Keyboard support
+    document.addEventListener('keydown', e => {
+      if (document.getElementById('survey').classList.contains('active')) {
+        if (e.key === 'Enter') nextStep();
+        if (e.key === 'ArrowLeft' && step > 0) prevStep();
+      }
+    });
+
+    window.onload = () => {
+      getCount();
+      
+      // Make it feel more premium
+      console.log('%cDOU Studio Ecosystem v2.0 - Advanced', 'color:#8B2FC9; font-size:13px; font-weight:700');
+    };
   </script>
 </body>
 </html>
