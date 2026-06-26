@@ -5,275 +5,34 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>DOU Studio • Ecosystem</title>
   <meta name="theme-color" content="#510F64">
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
-    
-    :root { 
-      --purple: #510F64; 
-      --purple-light: #8B2FC9; 
-      --bg: #030712; 
-      --card: #111827; 
-      --text: #F9FAFB; 
-      --muted: #9CA3AF; 
-      --border: rgba(255, 255, 255, 0.1); 
-      --gold: #F59E0B; 
-      --whatsapp: #25D366;
-    }
-    
-    * { 
-      box-sizing: border-box; 
-      margin: 0; 
-      padding: 0; 
-      -webkit-tap-highlight-color: transparent; 
-    }
-    
-    body { 
-      font-family: 'Plus Jakarta Sans', sans-serif; 
-      background: var(--bg); 
-      color: var(--text); 
-      height: 100dvh; 
-      overflow: hidden; 
-      position: relative;
-    }
-    
-    .bg-glow { 
-      position: fixed; 
-      inset: 0; 
-      z-index: -1;
-      background: radial-gradient(circle at 20% 30%, rgba(139, 47, 201, 0.25) 0%, transparent 50%),
-                  radial-gradient(circle at 80% 70%, rgba(245, 158, 11, 0.12) 0%, transparent 50%);
-      animation: glowPulse 15s ease infinite;
-    }
-    
-    @keyframes glowPulse { 
-      0%, 100% { opacity: 0.9; } 
-      50% { opacity: 1; } 
-    }
-    
-    .screen { 
-      position: fixed; 
-      inset: 0; 
-      display: none; 
-      flex-direction: column; 
-      padding: 1.5rem; 
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
-      overflow-y: auto;
-    }
-    .screen.active { display: flex; }
-    
-    .header { 
-      display: flex; 
-      justify-content: space-between; 
-      align-items: center; 
-      margin-bottom: 1.5rem; 
-      padding-top: env(safe-area-inset-top); 
-    }
-    
-    .q-title { 
-      font-size: 1.85rem; 
-      font-weight: 800; 
-      margin-bottom: 0.5rem; 
-      line-height: 1.1; 
-      letter-spacing: -0.025em;
-    }
-    
-    .q-sub { 
-      color: var(--muted); 
-      font-size: 0.97rem; 
-      margin-bottom: 1.75rem; 
-      line-height: 1.45;
-    }
-    
-    .highlight { color: var(--gold); font-weight: 700; }
-    
-    .options-list { 
-      display: flex; 
-      flex-direction: column; 
-      gap: 0.85rem; 
-      padding-bottom: 140px; 
-    }
-    
-    .option-btn { 
-      background: var(--card); 
-      border: 1.5px solid var(--border); 
-      padding: 1.25rem 1.1rem; 
-      border-radius: 20px; 
-      color: var(--text); 
-      display: flex; 
-      align-items: center; 
-      gap: 1rem; 
-      font-size: 1.05rem; 
-      font-weight: 600; 
-      text-align: left; 
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-    }
-    
-    .option-btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 12px 20px -4px rgb(139 47 201 / 0.25);
-      border-color: var(--purple-light);
-    }
-    
-    /* Strong Selected State */
-    .option-btn.selected { 
-      border: 2.5px solid var(--purple-light);
-      background: linear-gradient(135deg, rgba(139, 47, 201, 0.22), rgba(139, 47, 201, 0.09));
-      box-shadow: 0 0 0 5px rgba(139, 47, 201, 0.3),
-                  0 10px 15px -3px rgb(139 47 201 / 0.4);
-      transform: translateY(-2px);
-    }
-    
-    .option-btn.selected:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 0 0 6px rgba(139, 47, 201, 0.4),
-                  0 15px 25px -5px rgb(139 47 201 / 0.45);
-    }
-    
-    .text-input { 
-      width: 100%; 
-      background: var(--card); 
-      border: 1.5px solid var(--border); 
-      border-radius: 20px; 
-      padding: 1.2rem; 
-      color: var(--text); 
-      font-family: inherit; 
-      font-size: 1.05rem; 
-      outline: none; 
-      resize: none;
-      transition: all 0.2s;
-    }
-    
-    .text-input:focus {
-      border-color: var(--purple-light);
-      box-shadow: 0 0 0 4px rgba(139, 47, 201, 0.2);
-    }
-    
-    .nav-bar { 
-      position: fixed; 
-      bottom: 0; 
-      left: 0; 
-      right: 0; 
-      padding: 1.5rem calc(1.5rem + env(safe-area-inset-right)) calc(1.5rem + env(safe-area-inset-bottom)); 
-      background: linear-gradient(transparent, var(--bg) 30%); 
-      display: flex; 
-      gap: 0.9rem; 
-      z-index: 100; 
-    }
-    
-    .btn { 
-      flex: 1; 
-      height: 62px; 
-      border-radius: 20px; 
-      border: none; 
-      font-size: 1.05rem; 
-      font-weight: 700; 
-      cursor: pointer; 
-      display: flex; 
-      align-items: center; 
-      justify-content: center; 
-      gap: 10px; 
-      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); 
-    }
-    
-    .btn-next { 
-      background: linear-gradient(90deg, var(--purple), var(--purple-light)); 
-      color: white; 
-      box-shadow: 0 10px 15px -3px rgb(81 15 100 / 0.3);
-    }
-    
-    .btn-back { 
-      background: var(--card); 
-      color: var(--muted); 
-      flex: 0.45; 
-      border: 1.5px solid var(--border); 
-    }
-    
-    .progress { 
-      height: 7px; 
-      background: var(--border); 
-      border-radius: 9999px; 
-      margin-bottom: 1.8rem; 
-      overflow: hidden; 
-    }
-    
-    .progress-fill { 
-      height: 100%; 
-      background: linear-gradient(90deg, var(--purple), var(--purple-light)); 
-      transition: width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); 
-      border-radius: 9999px;
-    }
-
-    .ad-card { 
-      background: var(--card); 
-      border: 1px solid var(--border); 
-      padding: 1.4rem; 
-      border-radius: 24px; 
-      margin-bottom: 1.2rem; 
-      box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
-    }
-    
-    .ad-card h3 { 
-      font-size: 1.2rem; 
-      margin-bottom: 6px; 
-      color: var(--gold); 
-    }
-
-    .btn-launch { 
-      background: var(--purple); 
-      color: white; 
-      padding: 12px 20px; 
-      border-radius: 14px; 
-      font-size: 0.9rem; 
-      font-weight: 700; 
-      text-decoration: none; 
-      display: inline-flex; 
-      align-items: center; 
-      gap: 8px;
-      margin-top: 10px;
-    }
-
-    .success-emoji {
-      font-size: 4.5rem;
-      animation: bounce 1.5s ease infinite;
-    }
-
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-15px); }
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="bg-glow"></div>
 
-  <!-- LANDING -->
   <section id="landing" class="screen active">
-    <div style="margin-top: auto; margin-bottom: auto; text-align: center; max-width: 420px; margin-left: auto; margin-right: auto;">
-      <div style="font-size: 3.2rem; margin-bottom: 1rem;">🌟</div>
-      <h1 class="q-title" style="font-size: 2.8rem; background: linear-gradient(90deg, #8B2FC9, #F59E0B); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
-        DOU Studio
-      </h1>
-      <p class="q-sub" style="font-size: 1.1rem;">Building the future of student life at DOU.<br>Help us shape it.</p>
+    <div class="landing-content">
+      <div class="hero-emoji">🌟</div>
+      <h1 class="main-title">DOU Studio</h1>
+      <p class="q-sub text-center">Building the future of student life at DOU.<br>Help us shape it.</p>
       
-      <button onclick="startSurvey()" 
-              class="btn btn-next" 
-              style="font-size: 1.15rem; height: 68px; margin-top: 1.5rem;">
+      <button onclick="startSurvey()" class="btn btn-next landing-btn">
         Start Voting →
       </button>
       
-      <div style="margin-top: 2.5rem; font-size: 0.9rem; color: var(--muted);" id="liveCount">Connecting to DOU community...</div>
+      <div id="liveCount" class="live-count">Connecting to DOU community...</div>
     </div>
   </section>
 
-  <!-- SURVEY -->
   <section id="survey" class="screen">
     <div class="header">
-      <span style="font-weight:800; color:var(--purple-light); letter-spacing: -0.5px;">DOU STUDIO</span>
-      <span id="stepTxt" style="font-size:0.85rem; font-weight:700; color:var(--muted)">1/6</span>
+      <span class="brand">DOU STUDIO</span>
+      <span id="stepTxt" class="step-text">1/6</span>
     </div>
     
-    <div class="progress"><div id="pFill" class="progress-fill" style="width: 16.67%;"></div></div>
+    <div class="progress">
+      <div id="pFill" class="progress-fill"></div>
+    </div>
     
     <div id="qArea"></div>
 
@@ -283,198 +42,39 @@
     </div>
   </section>
 
-  <!-- SUCCESS -->
   <section id="thanks" class="screen">
-    <div style="padding-bottom: 100px; text-align: center; margin-top: auto; margin-bottom: auto;">
+    <div class="success-content">
       <div class="success-emoji">🚀</div>
-      <h1 class="q-title" style="font-size: 2.4rem;">Thank You, Legend!</h1>
-      <p class="q-sub" style="max-width: 340px; margin-left: auto; margin-right: auto;">Your voice just helped make student life at DOU better.</p>
+      <h1 class="q-title text-center size-large">Thank You, Legend!</h1>
+      <p class="q-sub text-center max-w-340">Your voice just helped make student life at DOU better.</p>
 
       <div class="ad-card">
         <h3>📚 Sure Success CBT</h3>
-        <p style="font-size: 0.9rem; color: var(--muted);">AI-powered past questions &amp; practice for your department.</p>
+        <p>AI-powered past questions &amp; practice for your department.</p>
         <a href="https://sure-success-cbt.vercel.app/" target="_blank" class="btn-launch">Open CBT App →</a>
       </div>
 
       <div class="ad-card">
         <h3>🛒 UniMemart</h3>
-        <p style="font-size: 0.9rem; color: var(--muted);">Buy, sell, and find rooms — all within DOU.</p>
+        <p>Buy, sell, and find rooms — all within DOU.</p>
         <a href="https://www.unimemart.com/" target="_blank" class="btn-launch">Visit Marketplace →</a>
       </div>
 
-      <div style="margin: 2.5rem 0 1.5rem;">
-        <button onclick="shareResults()" 
-                style="background: transparent; border: 1.5px solid var(--border); color: var(--text); padding: 14px 28px; border-radius: 9999px; font-weight: 600; cursor: pointer;">
+      <div class="share-container">
+        <button onclick="shareResults()" class="btn-share">
           📤 Share with Friends
         </button>
       </div>
 
-      <div>
-        <p style="font-size: 0.85rem; color: var(--muted);">Need help? Reach out to</p>
-        <a href="https://wa.me/2348162638106" target="_blank" 
-           style="background:var(--whatsapp); color:white; padding: 12px 24px; border-radius: 9999px; display: inline-flex; align-items: center; gap: 8px; text-decoration: none; font-weight: 600; margin-top: 8px;">
+      <div class="footer-contact">
+        <p>Need help? Reach out to</p>
+        <a href="https://wa.me/2348162638106" target="_blank" class="btn-whatsapp">
           💬 WhatsApp TheElders
         </a>
       </div>
     </div>
   </section>
 
-  <script>
-    const DB_URL = 'https://script.google.com/macros/s/AKfycbxJOFx17UvGldGJL8CKUMUQVtw-XJSKZlGXVqpzTykHxe8RA3Li832rJAKc5250iz14eg/exec';
-    const TG_TOKEN = '8768061971:AAFOGV0ZcFqVSXgEnbM1SAX6d8Y_0qe1jU0';
-    const TG_CHAT = '7129036848';
-
-    const questions = [
-      { id: 'know_cbt', type: 'single', q: 'Have you used Sure Success CBT?', sub: 'AI-powered exam practice tailored for DOU courses.', 
-        options: [{t: 'Yes, I love it! 🔥'}, {t: 'Heard about it but haven’t tried'}, {t: 'No, what is that?'}] },
-      { id: 'know_mart', type: 'single', q: 'Did you know about UniMemart?', sub: 'DOU’s official marketplace for buying/selling and finding rooms.', 
-        options: [{t: 'Yes, I use it regularly'}, {t: 'I’ve heard of it'}, {t: 'First time hearing about it'}] },
-      { id: 'dept', type: 'special', q: 'Which Department are you in?', sub: 'This helps us prioritize course materials in the CBT app.', 
-        options: [{t: 'Computer Science'}, {t: 'Cyber Security'}, {t: 'Data Science'}, {t: 'Software Engineering'}, {t: 'Other (please specify below)'}] },
-      { id: 'next_tool', type: 'single', q: 'What should we build next?', sub: 'Pick the tool that would help you most.', 
-        options: [{t: 'Digital Attendance System'}, {t: 'GPA & Result Tracker'}, {t: 'Digital Student ID Card'}, {t: 'Smart Hostel Finder'}] },
-      { id: 'matric', type: 'text', q: 'Matric Number (Optional)', sub: 'Helps us verify and give priority to active students.', placeholder: 'e.g. 22/12345' },
-      { id: 'feedback', type: 'text', q: 'Any other ideas or feedback?', sub: 'Tell us how we can make these apps better for you.', placeholder: 'Feature requests, bugs, UI suggestions...' }
-    ];
-
-    let step = 0;
-    let answers = {};
-    let submitted = false;
-
-    function launchConfetti() {
-      const colors = ['#8B2FC9', '#F59E0B', '#22C55E'];
-      for (let i = 0; i < 80; i++) {
-        setTimeout(() => {
-          const confetti = document.createElement('div');
-          confetti.style.position = 'fixed';
-          confetti.style.left = Math.random() * 100 + 'vw';
-          confetti.style.top = '-10px';
-          confetti.style.width = '10px';
-          confetti.style.height = '10px';
-          confetti.style.borderRadius = '2px';
-          confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
-          confetti.style.zIndex = '300';
-          document.body.appendChild(confetti);
-          
-          const duration = Math.random() * 3000 + 2500;
-          confetti.animate([
-            { transform: 'translateY(0) rotate(0deg)', opacity: 1 },
-            { transform: `translateY(\( {window.innerHeight + 100}px) rotate( \){Math.random() * 800 - 400}deg)`, opacity: 0 }
-          ], { duration: duration, easing: 'cubic-bezier(0.25, 0.1, 0.25, 1)' });
-          
-          setTimeout(() => confetti.remove(), duration);
-        }, i * 12);
-      }
-    }
-
-    async function getCount() {
-      try {
-        const r = await fetch(DB_URL);
-        const d = await r.json();
-        document.getElementById('liveCount').innerText = `${d.total || '300+'} students have voted`;
-      } catch(e) {
-        document.getElementById('liveCount').innerText = 'Join the DOU movement';
-      }
-    }
-
-    function startSurvey() {
-      document.getElementById('landing').classList.remove('active');
-      document.getElementById('survey').classList.add('active');
-      renderQuestion();
-    }
-
-    function renderQuestion() {
-      const q = questions[step];
-      const area = document.getElementById('qArea');
-      
-      document.getElementById('pFill').style.width = `${((step + 1) / questions.length) * 100}%`;
-      document.getElementById('stepTxt').innerText = `\( {step + 1}/ \){questions.length}`;
-      
-      document.getElementById('bBtn').style.visibility = step === 0 ? 'hidden' : 'visible';
-      
-      const isLast = step === questions.length - 1;
-      document.getElementById('nBtn').innerText = isLast ? 'Submit Feedback' : 'Next';
-      document.getElementById('nBtn').disabled = false;
-
-      let html = `<h1 class="q-title">\( {q.q}</h1><p class="q-sub"> \){q.sub}</p>`;
-      
-      if (q.type === 'single' || q.type === 'special') {
-        html += `<div class="options-list">`;
-        q.options.forEach(o => {
-          const selected = answers[q.id] === o.t ? 'selected' : '';
-          html += `<button class="option-btn \( {selected}" onclick="selectOption(' \){q.id}', '\( {o.t.replace(/'/g, "\\'")}')"> \){o.t}</button>`;
-        });
-        
-        if (q.type === 'special' && answers[q.id] === 'Other (please specify below)') {
-          html += `<input type="text" id="otherInput" class="text-input" placeholder="Type your department..." oninput="answers['other_dept']=this.value" style="margin-top:12px;">`;
-        }
-        html += `</div>`;
-      } else {
-        html += `<textarea id="textArea" class="text-input" style="min-height:160px" placeholder="\( {q.placeholder}" oninput="answers[' \){q.id}'] = this.value">${answers[q.id] || ''}</textarea>`;
-      }
-      
-      area.innerHTML = html;
-    }
-
-    function selectOption(id, val) {
-      answers[id] = val;
-      renderQuestion();
-      
-      if (val !== 'Other (please specify below)' && step < questions.length - 1) {
-        setTimeout(() => nextStep(), 380);
-      }
-    }
-
-    function nextStep() {
-      if (step === 2 && answers['other_dept']) {
-        answers['dept'] = answers['other_dept'];
-      }
-      if (step < questions.length - 1) {
-        step++;
-        renderQuestion();
-      } else {
-        submitSurvey();
-      }
-    }
-
-    function prevStep() {
-      if (step > 0) {
-        step--;
-        renderQuestion();
-      }
-    }
-
-    async function submitSurvey() {
-      if (submitted) return;
-      submitted = true;
-      
-      document.getElementById('survey').classList.remove('active');
-      document.getElementById('thanks').classList.add('active');
-      launchConfetti();
-
-      fetch(DB_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(answers) });
-
-      const msg = `🚀 <b>NEW DOU VOTE</b>\n\nCBT: ${answers.know_cbt || 'N/A'}\nMart: ${answers.know_mart || 'N/A'}\nDept: ${answers.dept || 'N/A'}\nNext: ${answers.next_tool || 'N/A'}\nMatric: ${answers.matric || '—'}\nFeedback: ${answers.feedback ? answers.feedback.substring(0,100) : 'None'}`;
-      
-      fetch(`https://api.telegram.org/bot${TG_TOKEN}/sendMessage`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ chat_id: TG_CHAT, text: msg, parse_mode: 'HTML' })
-      });
-    }
-
-    function shareResults() {
-      if (navigator.share) {
-        navigator.share({ title: 'DOU Studio', text: 'I just voted on the future of DOU student tools!', url: window.location.href });
-      } else {
-        navigator.clipboard.writeText(window.location.href);
-        alert('Link copied! Share with friends.');
-      }
-    }
-
-    window.onload = () => {
-      getCount();
-    };
-  </script>
+  <script src="app.js"></script>
 </body>
 </html>
