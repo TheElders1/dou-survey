@@ -231,7 +231,91 @@ body {
 }
 .landing-btn { font-size: 1.15rem; height: 68px; margin-top: 1.5rem; width: 100%; }
 
-/* Success Dashboard Elements */
+/* Success Dashboard Analytics Styling */
+.stats-container {
+  background: linear-gradient(180deg, rgba(17, 24, 39, 0.95), rgba(9, 13, 22, 0.98));
+  border: 1.5px solid rgba(139, 47, 201, 0.25);
+  border-radius: 24px;
+  padding: 1.4rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.5), 0 0 20px -5px rgba(139, 47, 201, 0.15);
+  text-align: left;
+}
+
+.stats-heading {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 1.2rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.5rem;
+}
+
+.stats-area {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.loading-stats {
+  font-size: 0.9rem;
+  color: var(--muted);
+  text-align: center;
+  padding: 1rem 0;
+  font-style: italic;
+}
+
+.stat-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.stat-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+.stat-label {
+  color: #E5E7EB;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 75%;
+}
+
+.stat-percentage {
+  color: var(--gold);
+  font-weight: 700;
+}
+
+.stat-bar-bg {
+  height: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 999px;
+  overflow: hidden;
+  position: relative;
+  border: 0.5px solid rgba(255, 255, 255, 0.05);
+}
+
+.stat-bar-fill {
+  height: 100%;
+  border-radius: 999px;
+  width: 0%;
+  transition: width 1.2s cubic-bezier(0.1, 1, 0.1, 1);
+}
+
+.stat-row:nth-child(1) .stat-bar-fill { background: linear-gradient(90deg, #F59E0B, #10B981); }
+.stat-row:nth-child(2) .stat-bar-fill { background: linear-gradient(90deg, #8B2FC9, #F59E0B); }
+.stat-row:nth-child(3) .stat-bar-fill { background: linear-gradient(90deg, #3B82F6, #8B2FC9); }
+.stat-row:nth-child(4) .stat-bar-fill { background: linear-gradient(90deg, #EC4899, #3B82F6); }
+
+/* Confetti & Actions */
 .success-emoji { font-size: 4.5rem; animation: bounce 1.5s ease infinite; }
 @keyframes bounce {
   0%, 100% { transform: translateY(0); }
